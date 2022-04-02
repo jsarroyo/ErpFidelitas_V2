@@ -103,12 +103,15 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BusinessLogic\CompaniesBL.cs" />
+    <Compile Include="BusinessLogic\PersonsTypeBL.cs" />
+    <Compile Include="BusinessLogic\ProductsBL.cs" />
+    <Compile Include="BusinessLogic\RolUsersBL.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\PersonsTypeController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\RolUsersController.cs" />
     <Compile Include="DataBase\Companies.cs">
       <DependentUpon>ModeloERP.tt</DependentUpon>
     </Compile>

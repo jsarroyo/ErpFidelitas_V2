@@ -6,11 +6,11 @@ namespace Api.ErpFidelitas.General.v2
 	public interface IGeneralBase<T>
 	{
 		Request Insert(T insertar);
-		Request GetAll();
-		Request GetById(object id);
+		Request GetAll(int CompanyId=0);
+		Request GetById(int CompanyId=0, object id=null);
 		Request GetByCondition();
 		Request UpdateById(T actualizar);
-		Request Delete(object id);
+		Request Delete(int CompanyId=0, object id=null);
 		Request Validations(T verificar);
 
 	}
