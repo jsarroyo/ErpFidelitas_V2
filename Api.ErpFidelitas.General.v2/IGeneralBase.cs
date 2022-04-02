@@ -7,10 +7,10 @@ namespace Api.ErpFidelitas.General.v2
 	{
 		Request Insert(T insertar);
 		Request GetAll();
-		Request GetById(int id);
+		Request GetById(object id);
 		Request GetByCondition();
 		Request UpdateById(T actualizar);
-		Request Delete(int id);
+		Request Delete(object id);
 		Request Validations(T verificar);
 
 	}
