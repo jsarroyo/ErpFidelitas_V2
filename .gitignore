@@ -6,6 +6,7 @@ bin-release/
 .vs/
 # Other files and folders
 .settings/
+.vs/
 
 # Executables
 *.swf
