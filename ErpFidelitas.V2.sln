@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.ErpFidelitas.General.v2", "Api.ErpFidelitas.General.v2\Api.ErpFidelitas.General.v2.csproj", "{7B80557F-8A14-4215-ACDC-65CBD0838B3B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7B80557F-8A14-4215-ACDC-65CBD0838B3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B80557F-8A14-4215-ACDC-65CBD0838B3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B80557F-8A14-4215-ACDC-65CBD0838B3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B80557F-8A14-4215-ACDC-65CBD0838B3B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0FD42ED7-DA78-4541-96CE-3FC08D019AB0}
+	EndGlobalSection
+EndGlobal
