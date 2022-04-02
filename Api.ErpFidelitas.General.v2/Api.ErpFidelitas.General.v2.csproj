@@ -109,6 +109,9 @@
     <Compile Include="BusinessLogic\ProductsBL.cs" />
     <Compile Include="BusinessLogic\RolUsersBL.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\PersonsTypeController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\RolUsersController.cs" />
     <Compile Include="DataBase\Companies.cs">
       <DependentUpon>ModeloERP.tt</DependentUpon>
     </Compile>
