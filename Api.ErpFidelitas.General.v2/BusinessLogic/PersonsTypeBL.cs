@@ -1,16 +1,16 @@
 ﻿using Api.ErpFidelitas.General.v2.DataBase;
 using Api.ErpFidelitas.General.v2.Utilities;
-using System; 
-using System.Linq; 
+using System;
+using System.Linq;
 
 namespace Api.ErpFidelitas.General.v2.BusinessLogic
 {
-	public class CompaniesBL : IGeneralBase<Companies>
+	public class PersonsTypeBL : IGeneralBase<PersonType>
 	{
-		public CompaniesBL ()
-		{ 
+		public PersonsTypeBL()
+		{
 		}
-		public Request GetById(int CompanyId,object id=null)
+		public Request GetById(int CompanyId, object id)
 		{
 			Request request = new Request();
 			using (var dBEntities = new ErpDBEntities())
@@ -19,8 +19,8 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				dBEntities.Configuration.LazyLoadingEnabled = false;
 				try
 				{
-					var Entidades = (from u in dBEntities.Companies
-									 where u.CompanyId == CompanyId
+					var Entidades = (from u in dBEntities.PersonType
+									 where u.PersonTypeId == (short)id
 									 select u).FirstOrDefault();
 					if (Entidades == null)
 					{
@@ -35,7 +35,7 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				}
 			}
 		}
-		public Request Insert(Companies insertar)
+		public Request Insert(PersonType insertar)
 		{
 			Request request = new Request();
 			request = Validations(insertar);
@@ -51,12 +51,12 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				dBEntities.Configuration.LazyLoadingEnabled = false;
 				try
 				{
-					var Entidades = (from u in dBEntities.Companies
-									 where u.CompanyId == insertar.CompanyId
+					var Entidades = (from u in dBEntities.PersonType
+									 where u.PersonTypeId == insertar.PersonTypeId
 									 select u).FirstOrDefault();
 					if (Entidades == null)
 					{
-						dBEntities.Companies.Add(insertar);
+						dBEntities.PersonType.Add(insertar);
 						var count = dBEntities.SaveChanges();
 						return request.DoSuccess(Entidades, $"Se inserto {count} registro correctamente");
 					}
@@ -69,7 +69,7 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				}
 			}
 		}
-		public Request Delete(int CompanyId, object id=null)
+		public Request Delete(int CompanyId, object id)
 		{
 
 			Request request = new Request();
@@ -79,15 +79,15 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				dBEntities.Configuration.LazyLoadingEnabled = false;
 				try
 				{
-					var Entidades = (from u in dBEntities.Companies
-									 where u.CompanyId == CompanyId
+					var Entidades = (from u in dBEntities.PersonType
+									 where u.PersonTypeId == (short)id
 									 select u).FirstOrDefault();
 					if (Entidades == null)
 					{
 						return request.DoWarning($"No se encontraron entidades por borrar.");
 					}
 
-					dBEntities.Companies.Remove(Entidades);
+					dBEntities.PersonType.Remove(Entidades);
 					var count = dBEntities.SaveChanges();
 					return request.DoSuccess(Entidades, $"Se eliminó {count} registro correctamente");
 				}
@@ -108,7 +108,7 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				dBEntities.Configuration.LazyLoadingEnabled = false;
 				try
 				{
-					var Entidades = (from u in dBEntities.Companies 
+					var Entidades = (from u in dBEntities.PersonType
 									 select u).ToList();
 					if (Entidades == null)
 					{
@@ -117,7 +117,7 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 					return request.DoSuccess(Entidades, $"Se encontraron {Entidades.Count} resultados");
 				}
 				catch (Exception ex)
-				{ 
+				{
 					return request.DoError(ex.Message);
 				}
 			}
@@ -131,7 +131,7 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				dBEntities.Configuration.LazyLoadingEnabled = false;
 				try
 				{
-					var Entidades = (from u in dBEntities.Companies
+					var Entidades = (from u in dBEntities.PersonType
 									 select u).ToList();
 					if (Entidades == null)
 					{
@@ -145,8 +145,8 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				}
 			}
 		}
-		public Request UpdateById(Companies actualizar)
-		{ 
+		public Request UpdateById(PersonType actualizar)
+		{
 			Request request = new Request();
 			request = Validations(actualizar);
 			if (!request.Success)
@@ -159,20 +159,15 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				dBEntities.Configuration.LazyLoadingEnabled = false;
 				try
 				{
-					var Entidades = (from u in dBEntities.Companies
-									 where u.CompanyId == actualizar.CompanyId
+					var Entidades = (from u in dBEntities.PersonType
+									 where u.PersonTypeId == actualizar.PersonTypeId
 									 select u).FirstOrDefault();
 					if (Entidades == null)
 					{
 						return request.DoWarning($"No se encontraron entidades por actualizar.");
 					}
 
-					Entidades.Active = actualizar.Active;
-					Entidades.Mision = actualizar.Mision;
-					Entidades.Vision = actualizar.Vision;
-					Entidades.PrincipalEmail = actualizar.PrincipalEmail;
 					Entidades.Name = actualizar.Name;
-
 
 					var count = dBEntities.SaveChanges();
 					return request.DoSuccess(Entidades, $"Se insertó {count} registro correctamente");
@@ -184,19 +179,16 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				}
 			}
 		}
-		public Request Validations(Companies verificar)
+		public Request Validations(PersonType verificar)
 		{
 			Request request = new Request();
-			 
-			if (string.IsNullOrEmpty(verificar.Name)) {
+
+			if (string.IsNullOrEmpty(verificar.Name))
+			{
 				return request.DoError("El nombre no puede estar vacio");
 			}
 			return request.DoSuccess();
 		}
+
 	}
-
-	
-
-	
-	
 }
