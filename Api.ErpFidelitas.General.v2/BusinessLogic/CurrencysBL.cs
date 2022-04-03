@@ -1,42 +1,16 @@
 ﻿using Api.ErpFidelitas.General.v2.DataBase;
 using Api.ErpFidelitas.General.v2.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 
 namespace Api.ErpFidelitas.General.v2.BusinessLogic
 {
-	public class ProductsBL : IGeneralBase<Products>
-	{
-		public ProductsBL()
-		{
-		}
-		public Request GetById(int Company,object id)
-		{
-			Request request = new Request();
-			using (var dBEntities = new ErpDBEntities())
-			{
-				dBEntities.Configuration.ProxyCreationEnabled = false;
-				dBEntities.Configuration.LazyLoadingEnabled = false;
-				try
-				{
-					var Entidades = (from u in dBEntities.Products
-									 where u.ProductId == (int)id
-									 && u.CompanyId == Company
-									 select u).FirstOrDefault();
-					if (Entidades == null)
-					{
-						return request.DoWarning($"No se obtuvieron resultados en la búsqueda del ID {id}");
-					}
-					return request.DoSuccess(Entidades, $"Se encontró {1} resultado");
-				}
-				catch (Exception ex)
-				{
+    public class CurrencysBL : IGeneralBase<Currencys>
+    {
 
-					return request.DoError(ex.Message);
-				}
-			}
-		}
-		public Request Insert(Products insertar)
+		public Request Insert(Currencys insertar)
 		{
 			Request request = new Request();
 			request = Validations(insertar);
@@ -52,13 +26,12 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				dBEntities.Configuration.LazyLoadingEnabled = false;
 				try
 				{
-					var Entidades = (from u in dBEntities.Products
-									 where u.ProductId == insertar.ProductId
-									 && u.CompanyId == insertar.CompanyId
+					var Entidades = (from u in dBEntities.Currencys
+									 where u.CurrencyId == insertar.CurrencyId
 									 select u).FirstOrDefault();
 					if (Entidades == null)
 					{
-						dBEntities.Products.Add(insertar);
+						dBEntities.Currencys.Add(insertar);
 						var count = dBEntities.SaveChanges();
 						return request.DoSuccess(Entidades, $"Se inserto {count} registro correctamente");
 					}
@@ -66,14 +39,13 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				}
 				catch (Exception ex)
 				{
-
 					return request.DoError(ex.Message);
 				}
 			}
-		}
-		public Request Delete(int Company,object id)
-		{
+		}//Fin Class Insert 
 
+		public Request GetById(int CurrencyId, object id = null)
+		{
 			Request request = new Request();
 			using (var dBEntities = new ErpDBEntities())
 			{
@@ -81,28 +53,23 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				dBEntities.Configuration.LazyLoadingEnabled = false;
 				try
 				{
-					var Entidades = (from u in dBEntities.Products
-									 where u.ProductId == (int)id
-									  && u.CompanyId == Company
+					var Entidades = (from u in dBEntities.Currencys
+									 where u.CurrencyId == CurrencyId
 									 select u).FirstOrDefault();
 					if (Entidades == null)
 					{
-						return request.DoWarning($"No se encontraron entidades por borrar.");
+						return request.DoWarning($"No se obtuvieron resultados en la búsqueda del ID {id}");
 					}
-
-					dBEntities.Products.Remove(Entidades);
-					var count = dBEntities.SaveChanges();
-					return request.DoSuccess(Entidades, $"Se eliminó {count} registro correctamente");
+					return request.DoSuccess(Entidades, $"Se encontró {1} resultado");
 				}
 				catch (Exception ex)
 				{
-
 					return request.DoError(ex.Message);
 				}
 			}
+		}//Fin GetbyId
 
-		}
-		public Request GetAll(int Company)
+		public Request GetAll(int Company = 0)
 		{
 			Request request = new Request();
 			using (var dBEntities = new ErpDBEntities())
@@ -111,8 +78,7 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				dBEntities.Configuration.LazyLoadingEnabled = false;
 				try
 				{
-					var Entidades = (from u in dBEntities.Products
-									 where  u.CompanyId == Company
+					var Entidades = (from u in dBEntities.Currencys
 									 select u).ToList();
 					if (Entidades == null)
 					{
@@ -125,7 +91,8 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 					return request.DoError(ex.Message);
 				}
 			}
-		}
+		}//Fin GetAll
+
 		public Request GetByCondition()
 		{
 			Request request = new Request();
@@ -135,7 +102,7 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				dBEntities.Configuration.LazyLoadingEnabled = false;
 				try
 				{
-					var Entidades = (from u in dBEntities.Products
+					var Entidades = (from u in dBEntities.Currencys
 									 select u).ToList();
 					if (Entidades == null)
 					{
@@ -148,8 +115,9 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 					return request.DoError(ex.Message);
 				}
 			}
-		}
-		public Request UpdateById(Products actualizar)
+		}//Fin GetByCondition
+
+		public Request UpdateById(Currencys actualizar)
 		{
 			Request request = new Request();
 			request = Validations(actualizar);
@@ -163,30 +131,56 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				dBEntities.Configuration.LazyLoadingEnabled = false;
 				try
 				{
-					var Entidades = (from u in dBEntities.Products
-									 where u.ProductId == actualizar.ProductId
-									 && u.CompanyId == actualizar.CompanyId
+					var Entidades = (from u in dBEntities.Currencys
+									 where u.CurrencyId == actualizar.CurrencyId
 									 select u).FirstOrDefault();
 					if (Entidades == null)
 					{
 						return request.DoWarning($"No se encontraron entidades por actualizar.");
 					}
 
-					Entidades.Name = actualizar.Name;
-					Entidades.UnitPrice = actualizar.UnitPrice;
-					Entidades.UnitCost = actualizar.UnitCost;
+					Entidades.Name= actualizar.Name;
 
 					var count = dBEntities.SaveChanges();
 					return request.DoSuccess(Entidades, $"Se insertó {count} registro correctamente");
 				}
 				catch (Exception ex)
 				{
-
 					return request.DoError(ex.Message);
 				}
 			}
-		}
-		public Request Validations(Products verificar)
+		}//Fin UpdateById
+
+		public Request Delete(int CurrencyId, object id = null)
+		{
+
+			Request request = new Request();
+			using (var dBEntities = new ErpDBEntities())
+			{
+				dBEntities.Configuration.ProxyCreationEnabled = false;
+				dBEntities.Configuration.LazyLoadingEnabled = false;
+				try
+				{
+					var Entidades = (from u in dBEntities.Currencys
+									 where u.CurrencyId == CurrencyId
+									 select u).FirstOrDefault();
+					if (Entidades == null)
+					{
+						return request.DoWarning($"No se encontraron entidades por borrar.");
+					}
+
+					dBEntities.Currencys.Remove(Entidades);
+					var count = dBEntities.SaveChanges();
+					return request.DoSuccess(Entidades, $"Se eliminó {count} registro correctamente");
+				}
+				catch (Exception ex)
+				{
+					return request.DoError(ex.Message);
+				}
+			}
+		}//Fin Delete
+
+		public Request Validations(Currencys verificar)
 		{
 			Request request = new Request();
 
@@ -195,8 +189,9 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				return request.DoError("El nombre no puede estar vacio");
 			}
 			return request.DoSuccess();
-		}
+		}//Fin Validations
 
-	}
+    }
+
 
 }

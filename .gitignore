@@ -19,3 +19,4 @@ bin-release/
 # information for Eclipse / Flash Builder.
 .vs/ErpFidelitas.V2/v16/.suo
 .vs/ErpFidelitas.V2/v16/.suo
+.vs/ErpFidelitas.V2/config/applicationhost.config

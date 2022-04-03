@@ -20,7 +20,7 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				try
 				{
 					var Entidades = (from u in dBEntities.PersonType
-									 where u.PersonTypeId == (short)id
+									 where u.PersonTypeId == (int)id
 									 select u).FirstOrDefault();
 					if (Entidades == null)
 					{
@@ -30,7 +30,6 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				}
 				catch (Exception ex)
 				{
-
 					return request.DoError(ex.Message);
 				}
 			}
@@ -80,7 +79,7 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				try
 				{
 					var Entidades = (from u in dBEntities.PersonType
-									 where u.PersonTypeId == (short)id
+									 where u.PersonTypeId == (int)id
 									 select u).FirstOrDefault();
 					if (Entidades == null)
 					{
