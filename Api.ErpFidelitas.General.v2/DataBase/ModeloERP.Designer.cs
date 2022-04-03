@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\Chus\Desarrollo\.NET\C#\ErpRepository\ErpFidelitas_V2\ErpFidelitas.V2\Api.ErpFidelitas.General.v2\DataBase\ModeloERP.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\Chus\Desarrollo\.NET\C#\ErpRepository\ErpFidelitas_V2\ErpFidelitas_V2\Api.ErpFidelitas.General.v2\DataBase\ModeloERP.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

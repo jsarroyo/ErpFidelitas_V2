@@ -12,6 +12,5 @@ namespace Api.ErpFidelitas.General.v2
 		Request UpdateById(T actualizar);
 		Request Delete(int CompanyId=0, object id=null);
 		Request Validations(T verificar);
-
 	}
 }
