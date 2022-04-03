@@ -103,7 +103,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BusinessLogic\CompaniesBL.cs" />
     <Compile Include="BusinessLogic\PersonsTypeBL.cs" />
     <Compile Include="BusinessLogic\ProductsBL.cs" />
@@ -196,6 +195,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="App_Start\" />
     <Folder Include="Data\" />
     <Folder Include="Views\Person\" />
   </ItemGroup>
