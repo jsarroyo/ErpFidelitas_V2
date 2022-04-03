@@ -105,10 +105,18 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BusinessLogic\CompaniesBL.cs" />
+    <Compile Include="BusinessLogic\MovementsAccountsReceivableBL.cs" />
+    <Compile Include="BusinessLogic\MovementsDebtsToPayBL.cs" />
+    <Compile Include="BusinessLogic\MovementsInventoryBL.cs" />
+    <Compile Include="BusinessLogic\ParametersBL.cs" />
     <Compile Include="BusinessLogic\PersonsTypeBL.cs" />
     <Compile Include="BusinessLogic\ProductsBL.cs" />
     <Compile Include="BusinessLogic\RolUsersBL.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\MovementsAccountsReceivableController.cs" />
+    <Compile Include="Controllers\MovementsDebtsToPayController.cs" />
+    <Compile Include="Controllers\MovementsInventoryController.cs" />
+    <Compile Include="Controllers\ParametersController.cs" />
     <Compile Include="Controllers\PersonsTypeController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\RolUsersController.cs" />
@@ -197,6 +205,10 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
+    <Folder Include="Views\MovementsAccountsReceivable\" />
+    <Folder Include="Views\MovementsDebtsToPay\" />
+    <Folder Include="Views\MovementsInventory\" />
+    <Folder Include="Views\Parameters\" />
     <Folder Include="Views\Person\" />
   </ItemGroup>
   <ItemGroup>
