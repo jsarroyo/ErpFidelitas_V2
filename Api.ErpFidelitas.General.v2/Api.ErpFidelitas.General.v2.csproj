@@ -235,6 +235,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\web.config" />
+    <Content Include="Views\Currencys\View.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -245,7 +246,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
-    <Folder Include="Views\Currencys\" />
     <Folder Include="Views\MovementsAccountsReceivable\" />
     <Folder Include="Views\MovementsDebtsToPay\" />
     <Folder Include="Views\MovementsInventory\" />
