@@ -104,10 +104,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogic\CompaniesBL.cs" />
+    <Compile Include="BusinessLogic\CurrencysBL.cs" />
+    <Compile Include="BusinessLogic\DocumentTypesBL.cs" />
+    <Compile Include="BusinessLogic\MovementsAccountsReceivableBL.cs" />
+    <Compile Include="BusinessLogic\MovementsDebtsToPayBL.cs" />
+    <Compile Include="BusinessLogic\MovementsInventoryBL.cs" />
+    <Compile Include="BusinessLogic\ParametersBL.cs" />
+    <Compile Include="BusinessLogic\PersonsBL.cs" />
     <Compile Include="BusinessLogic\PersonsTypeBL.cs" />
     <Compile Include="BusinessLogic\ProductsBL.cs" />
     <Compile Include="BusinessLogic\RolUsersBL.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
+    <Compile Include="Controllers\CurrencysController.cs" />
+    <Compile Include="Controllers\DocumentTypesController.cs" />
+    <Compile Include="Controllers\MovementsAccountsReceivableController.cs" />
+    <Compile Include="Controllers\MovementsDebtsToPayController.cs" />
+    <Compile Include="Controllers\MovementsInventoryController.cs" />
+    <Compile Include="Controllers\ParametersController.cs" />
+    <Compile Include="Controllers\PersonsController.cs" />
     <Compile Include="Controllers\PersonsTypeController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\RolUsersController.cs" />
