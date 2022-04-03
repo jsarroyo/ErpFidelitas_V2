@@ -20,7 +20,7 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				try
 				{
 					var Entidades = (from u in dBEntities.Products
-									 where u.ProductId == (short)id
+									 where u.ProductId == (int)id
 									 && u.CompanyId == Company
 									 select u).FirstOrDefault();
 					if (Entidades == null)
@@ -82,7 +82,7 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				try
 				{
 					var Entidades = (from u in dBEntities.Products
-									 where u.ProductId == (short)id
+									 where u.ProductId == (int)id
 									  && u.CompanyId == Company
 									 select u).FirstOrDefault();
 					if (Entidades == null)

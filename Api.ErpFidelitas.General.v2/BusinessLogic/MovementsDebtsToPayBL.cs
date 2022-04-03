@@ -19,7 +19,7 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
                 try
                 {
                     var Entidades = (from u in dBEntities.MovementsDebtsToPay
-                                     where u.DebtsToPayId == (short)id
+                                     where u.DebtsToPayId == (int)id
                                       && u.CompanyId == CompanyId
                                      select u).FirstOrDefault();
                     if (Entidades == null)
@@ -98,7 +98,7 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
                 try
                 {
                     var Entidades = (from u in dBEntities.MovementsDebtsToPay
-                                     where u.DebtsToPayId == (short)id
+                                     where u.DebtsToPayId == (int)id
                                      && u.CompanyId == CompanyId
                                      select u).FirstOrDefault();
                     if (Entidades == null)
