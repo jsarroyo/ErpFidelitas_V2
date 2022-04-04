@@ -2024,6 +2024,26 @@
     <Content Include="vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="vendor\jquery\jquery.min.map" />
     <Content Include="vendor\jquery\jquery.slim.min.map" />
+    <Content Include="Views\MovementAccountReceivable\Index.cshtml" />
+    <Content Include="Views\MovementAccountReceivable\Details.cshtml" />
+    <Content Include="Views\MovementAccountReceivable\Create.cshtml" />
+    <Content Include="Views\MovementAccountReceivable\Delete.cshtml" />
+    <Content Include="Views\MovementAccountReceivable\Edit.cshtml" />
+    <Content Include="Views\MovementDebtToPay\Index.cshtml" />
+    <Content Include="Views\MovementDebtToPay\Details.cshtml" />
+    <Content Include="Views\MovementInventory\Index.cshtml" />
+    <Content Include="Views\MovementInventory\Details.cshtml" />
+    <Content Include="Views\MovementInventory\Create.cshtml" />
+    <Content Include="Views\MovementInventory\Edit.cshtml" />
+    <Content Include="Views\MovementInventory\Delete.cshtml" />
+    <Content Include="Views\MovementDebtToPay\Create.cshtml" />
+    <Content Include="Views\MovementDebtToPay\Edit.cshtml" />
+    <Content Include="Views\MovementDebtToPay\Delete.cshtml" />
+    <Content Include="Views\Parameter\Index.cshtml" />
+    <Content Include="Views\Parameter\Details.cshtml" />
+    <Content Include="Views\Parameter\Create.cshtml" />
+    <Content Include="Views\Parameter\Edit.cshtml" />
+    <Content Include="Views\Parameter\Delete.cshtml" />
     <Content Include="Views\Currency\Index.cshtml" />
     <Content Include="Views\Currency\Details.cshtml" />
     <Content Include="Views\Currency\Create.cshtml" />
@@ -2043,6 +2063,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Currency\" />
+    <Folder Include="Views\DocumentType\" />
     <Folder Include="Views\MovementAccountReceivable\" />
     <Folder Include="Views\MovementDebtToPay\" />
     <Folder Include="Views\MovementInventory\" />
