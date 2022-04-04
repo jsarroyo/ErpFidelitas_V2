@@ -23,9 +23,18 @@ namespace Api.ErpFidelitas.General.v2.Controllers
 			return DocumentT.GetById(id);
 		}
 
+		[HttpGet]
+		[Route("General/DocumentTypes/ObtenerTodas")]
+		public Request ObtenerTodas()
+		{
+			DocumentT = new DocumentTypesBL();
+
+			return DocumentT.GetAll();
+		}
+
 		//[FiltroSeguridad]
 		[HttpPost]
-		[Route("General/Currencys/CrearUno")]
+		[Route("General/DocumentTypes/CrearUno")]
 		public Request CrearUno(DocumentTypes insertar)
 		{
 			DocumentT = new DocumentTypesBL();
@@ -33,7 +42,7 @@ namespace Api.ErpFidelitas.General.v2.Controllers
 			return DocumentT.Insert(insertar);
 		}
 		[HttpDelete]
-		[Route("General/Currencys/BorrarUno")]
+		[Route("General/DocumentTypes/BorrarUno")]
 		public Request BorrarUno(int id)
 		{
 			DocumentT = new DocumentTypesBL();
@@ -41,7 +50,7 @@ namespace Api.ErpFidelitas.General.v2.Controllers
 			return DocumentT.Delete(id);
 		}
 		[HttpPut]
-		[Route("General/Currencys/ActualizarUno")]
+		[Route("General/DocumentTypes/ActualizarUno")]
 		public Request ActualizarUno(DocumentTypes insertar)
 		{
 			DocumentT = new DocumentTypesBL();

@@ -23,6 +23,15 @@ namespace Api.ErpFidelitas.General.v2.Controllers
 			return person.GetById(id);
 		}
 
+		[HttpGet]
+		[Route("General/Persons/ObtenerTodas")]
+		public Request ObtenerTodas()
+		{
+			person = new PersonsBL();
+
+			return person.GetAll();
+		}
+
 		//[FiltroSeguridad]
 		[HttpPost]
 		[Route("General/Persons/CrearUno")]

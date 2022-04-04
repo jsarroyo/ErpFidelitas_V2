@@ -2024,18 +2024,30 @@
     <Content Include="vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="vendor\jquery\jquery.min.map" />
     <Content Include="vendor\jquery\jquery.slim.min.map" />
+    <Content Include="Views\Currency\Index.cshtml" />
+    <Content Include="Views\Currency\Details.cshtml" />
+    <Content Include="Views\Currency\Create.cshtml" />
+    <Content Include="Views\Currency\Edit.cshtml" />
+    <Content Include="Views\Currency\Delete.cshtml" />
+    <Content Include="Views\DocumentType\Index.cshtml" />
+    <Content Include="Views\DocumentType\Details.cshtml" />
+    <Content Include="Views\DocumentType\Create.cshtml" />
+    <Content Include="Views\DocumentType\Edit.cshtml" />
+    <Content Include="Views\DocumentType\Delete.cshtml" />
+    <Content Include="Views\Person\Index.cshtml" />
+    <Content Include="Views\Person\Details.cshtml" />
+    <Content Include="Views\Person\Create.cshtml" />
+    <Content Include="Views\Person\Edit.cshtml" />
+    <Content Include="Views\Person\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Currency\" />
-    <Folder Include="Views\DocumentType\" />
     <Folder Include="Views\MovementAccountReceivable\" />
     <Folder Include="Views\MovementDebtToPay\" />
     <Folder Include="Views\MovementInventory\" />
     <Folder Include="Views\Parameter\" />
     <Folder Include="Views\PersonType\" />
-    <Folder Include="Views\Person\" />
     <Folder Include="Views\Products\" />
     <Folder Include="Views\RolUsers\" />
     <Folder Include="Views\User\" />

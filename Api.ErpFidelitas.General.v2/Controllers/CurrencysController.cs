@@ -22,7 +22,16 @@ namespace Api.ErpFidelitas.General.v2.Controllers
 
 			return currency.GetById(id);
 		}
-	
+
+		[HttpGet]
+		[Route("General/Currencys/ObtenerTodas")]
+		public Request ObtenerTodas()
+		{
+			currency = new CurrencysBL();
+
+			return currency.GetAll();
+		}
+
 		//[FiltroSeguridad]
 		[HttpPost]
 		[Route("General/Currencys/CrearUno")]
