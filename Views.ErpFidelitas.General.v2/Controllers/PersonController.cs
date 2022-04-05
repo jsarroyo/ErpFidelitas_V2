@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -24,7 +25,7 @@ namespace Views.ErpFidelitas.General.v2.Controllers
 
             using (var client = new HttpClient())
             {
-                HttpResponseMessage response = await client.GetAsync("https://localhost:44313/General/Person/ObtenerTodas");
+                HttpResponseMessage response = await client.GetAsync("https://localhost:44331/General/Persons/ObtenerTodas");
                 if (response.IsSuccessStatusCode)
                 {
                     var str = await response.Content.ReadAsStringAsync();
@@ -40,9 +41,25 @@ namespace Views.ErpFidelitas.General.v2.Controllers
         }
 
         // GET: Person/Details/5
-        public ActionResult Details(int id)
+        public async Task< ActionResult> Details(int id)
         {
-            return View();
+            personNew = new Person();
+            responseClient = new Response();
+
+            using (var client = new HttpClient())
+            {
+                HttpResponseMessage response = await client.GetAsync($"https://localhost:44331/General/Persons/ObtenerUno?id={id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var str = await response.Content.ReadAsStringAsync();
+                    responseClient = JsonConvert.DeserializeObject<Response>(str);
+                }
+                if (responseClient.Success)
+                {
+                    personNew = JsonConvert.DeserializeObject<Person>(responseClient.Value.ToString());
+                }
+            }
+            return View(personNew);
         }
 
         // GET: Person/Create
@@ -53,12 +70,23 @@ namespace Views.ErpFidelitas.General.v2.Controllers
 
         // POST: Person/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public async Task< ActionResult> Create(FormCollection collection)
         {
             try
             {
-                // TODO: Add insert logic here
+                personNew = new Person();
+                responseClient = new Response();
 
+                using (var client = new HttpClient())
+                {
+                    var json = JsonConvert.SerializeObject(collection);
+                    var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.PostAsync($"https://localhost:44331/General/Persons/CrearUno", stringContent);
+
+                    string resultContent = response.Content.ReadAsStringAsync().Result;
+
+                }
                 return RedirectToAction("Index");
             }
             catch
@@ -75,11 +103,22 @@ namespace Views.ErpFidelitas.General.v2.Controllers
 
         // POST: Person/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public async Task< ActionResult> Edit(int id, FormCollection collection)
         {
             try
             {
-                // TODO: Add update logic here
+                responseClient = new Response();
+
+                using (var client = new HttpClient())
+                {
+                    var json = JsonConvert.SerializeObject(collection);
+                    var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.PutAsync($"https://localhost:44331/General/Persons/ActualizarUno", stringContent);
+
+                    string resultContent = response.Content.ReadAsStringAsync().Result;
+
+                }
 
                 return RedirectToAction("Index");
             }
@@ -97,12 +136,22 @@ namespace Views.ErpFidelitas.General.v2.Controllers
 
         // POST: Person/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public  async Task< ActionResult> Delete(int id, FormCollection collection)
         {
             try
             {
-                // TODO: Add delete logic here
+                responseClient = new Response();
 
+                using (var client = new HttpClient())
+                {
+                    var json = JsonConvert.SerializeObject(collection);
+                    var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.DeleteAsync($"https://localhost:44331/General/Persons/BorrarUno?id={id}");
+
+                    string resultContent = response.Content.ReadAsStringAsync().Result;
+
+                }
                 return RedirectToAction("Index");
             }
             catch

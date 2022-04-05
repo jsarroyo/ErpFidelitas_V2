@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -24,7 +25,7 @@ namespace Views.ErpFidelitas.General.v2.Controllers
 
             using (var client = new HttpClient())
             {
-                HttpResponseMessage response = await client.GetAsync("https://localhost:44313/General/Currencys/ObtenerTodas");
+                HttpResponseMessage response = await client.GetAsync("https://localhost:44331/General/Currencys/ObtenerTodas");
                 if (response.IsSuccessStatusCode)
                 {
                     var str = await response.Content.ReadAsStringAsync();
@@ -39,9 +40,25 @@ namespace Views.ErpFidelitas.General.v2.Controllers
         }
 
         // GET: Currency/Details/5
-        public ActionResult Details(int id)
+        public async Task< ActionResult> Details(int id)
         {
-            return View();
+            currency = new Currency();
+            responseClient = new Response();
+
+            using (var client = new HttpClient())
+            {
+                HttpResponseMessage response = await client.GetAsync($"https://localhost:44331/General/Currencys/ObtenerUno?id={id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var str = await response.Content.ReadAsStringAsync();
+                    responseClient = JsonConvert.DeserializeObject<Response>(str);
+                }
+                if (responseClient.Success)
+                {
+                    currency = JsonConvert.DeserializeObject<Currency>(responseClient.Value.ToString());
+                }
+            }
+            return View(currency);
         }
 
         // GET: Currency/Create
@@ -52,11 +69,23 @@ namespace Views.ErpFidelitas.General.v2.Controllers
 
         // POST: Currency/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public async Task< ActionResult >Create(FormCollection collection)
         {
             try
             {
-                // TODO: Add insert logic here
+                currency = new Currency();
+                responseClient = new Response();
+
+                using (var client = new HttpClient())
+                {
+                    var json = JsonConvert.SerializeObject(collection);
+                    var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.PostAsync($"https://localhost:44331/General/Currencys/CrearUno", stringContent);
+
+                    string resultContent = response.Content.ReadAsStringAsync().Result;
+
+                }
 
                 return RedirectToAction("Index");
             }
@@ -74,11 +103,23 @@ namespace Views.ErpFidelitas.General.v2.Controllers
 
         // POST: Currency/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public  async Task<ActionResult> Edit(int id, FormCollection collection)
         {
             try
             {
-                // TODO: Add update logic here
+                currency = new Currency();
+                responseClient = new Response();
+
+                using (var client = new HttpClient())
+                {
+                    var json = JsonConvert.SerializeObject(collection);
+                    var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.PutAsync($"https://localhost:44331/General/Currencys/ActualizarUno", stringContent);
+
+                    string resultContent = response.Content.ReadAsStringAsync().Result;
+
+                }
 
                 return RedirectToAction("Index");
             }
@@ -96,12 +137,22 @@ namespace Views.ErpFidelitas.General.v2.Controllers
 
         // POST: Currency/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public async Task< ActionResult> Delete(int id, FormCollection collection)
         {
             try
             {
-                // TODO: Add delete logic here
+                responseClient = new Response();
 
+                using (var client = new HttpClient())
+                {
+                    var json = JsonConvert.SerializeObject(collection);
+                    var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.DeleteAsync($"https://localhost:44331/General/Currencys/BorrarUno?id={id}");
+
+                    string resultContent = response.Content.ReadAsStringAsync().Result;
+
+                }
                 return RedirectToAction("Index");
             }
             catch
