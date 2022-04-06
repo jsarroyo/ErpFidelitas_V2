@@ -115,6 +115,7 @@
     <Compile Include="BusinessLogic\PersonsTypeBL.cs" />
     <Compile Include="BusinessLogic\ProductsBL.cs" />
     <Compile Include="BusinessLogic\RolUsersBL.cs" />
+    <Compile Include="BusinessLogic\UserBL.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\CurrencysController.cs" />
     <Compile Include="Controllers\DocumentTypesController.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Controllers\PersonsTypeController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\RolUsersController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DataBase\Companies.cs">
       <DependentUpon>ModeloERP.tt</DependentUpon>
     </Compile>

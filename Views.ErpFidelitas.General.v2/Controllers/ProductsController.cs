@@ -1,23 +1,64 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Views.ErpFidelitas.General.v2.Entities;
+using Views.ErpFidelitas.General.v2.Utilities;
 
 namespace Views.ErpFidelitas.General.v2.Controllers
 {
     public class ProductsController : Controller
     {
+        Product product;
+        List<Product> productN;
+        Response responseClient;
         // GET: Products
-        public ActionResult Index()
+        public async Task<ActionResult >Index()
         {
-            return View();
+            productN = new List<Product>();
+            responseClient = new Response();
+
+            using (var client = new HttpClient())
+            {
+                HttpResponseMessage response = await client.GetAsync("https://localhost:44331/General/Products/ObtenerTodas");
+                if (response.IsSuccessStatusCode)
+                {
+                    var str = await response.Content.ReadAsStringAsync();
+                    responseClient = JsonConvert.DeserializeObject<Response>(str);
+                }
+                if (responseClient.Success)
+                {
+                    productN = JsonConvert.DeserializeObject<List<Product>>(responseClient.Value.ToString());
+                }
+            }
+            return View(productN);
         }
 
         // GET: Products/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            product = new Product();
+            responseClient = new Response();
+
+            using (var client = new HttpClient())
+            {
+                HttpResponseMessage response = await client.GetAsync($"https://localhost:44331/General/Products/ObtenerUno?id={id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var str = await response.Content.ReadAsStringAsync();
+                    responseClient = JsonConvert.DeserializeObject<Response>(str);
+                }
+                if (responseClient.Success)
+                {
+                    product = JsonConvert.DeserializeObject<Product>(responseClient.Value.ToString());
+                }
+            }
+            return View(product);
         }
 
         // GET: Products/Create
@@ -28,11 +69,23 @@ namespace Views.ErpFidelitas.General.v2.Controllers
 
         // POST: Products/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public async Task<ActionResult> Create(FormCollection collection)
         {
             try
             {
-                // TODO: Add insert logic here
+                product = new Product();
+                responseClient = new Response();
+
+                using (var client = new HttpClient())
+                {
+                    var json = JsonConvert.SerializeObject(collection);
+                    var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.PostAsync($"https://localhost:44331/General/Products/CrearUno", stringContent);
+
+                    string resultContent = response.Content.ReadAsStringAsync().Result;
+
+                }
 
                 return RedirectToAction("Index");
             }
@@ -50,12 +103,23 @@ namespace Views.ErpFidelitas.General.v2.Controllers
 
         // POST: Products/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public async Task<ActionResult> Edit(int id, FormCollection collection)
         {
             try
             {
-                // TODO: Add update logic here
+                product = new Product();
+                responseClient = new Response();
 
+                using (var client = new HttpClient())
+                {
+                    var json = JsonConvert.SerializeObject(collection);
+                    var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.PutAsync($"https://localhost:44331/General/Products/ActualizarUno", stringContent);
+
+                    string resultContent = response.Content.ReadAsStringAsync().Result;
+
+                }
                 return RedirectToAction("Index");
             }
             catch
@@ -72,12 +136,23 @@ namespace Views.ErpFidelitas.General.v2.Controllers
 
         // POST: Products/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public async Task<ActionResult >Delete(int id, FormCollection collection)
         {
             try
             {
-                // TODO: Add delete logic here
+                product = new Product();
+                responseClient = new Response();
 
+                using (var client = new HttpClient())
+                {
+                    var json = JsonConvert.SerializeObject(collection);
+                    var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.DeleteAsync($"https://localhost:44331/General/Products/BorrarUno?id={id}");
+
+                    string resultContent = response.Content.ReadAsStringAsync().Result;
+
+                }
                 return RedirectToAction("Index");
             }
             catch

@@ -2,45 +2,43 @@
 
 @{
     ViewBag.Title = "Details";
-   // Layout = "~/Views/_ViewStart.cshtml";
+    // Layout = "~/Views/_ViewStart.cshtml";
 }
 
 <h2>Details</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
+<div>
+    <h4>DocumentType</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
             @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.DebitAccountId)
-        </th>
-        <th>
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DebitAccountId)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.CreditAccountId)
-        </th>
-        <th></th>
-    </tr>
+        </dt>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DebitAccountId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreditAccountId)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.DocumentTypeId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.DocumentTypeId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.DocumentTypeId })
-        </td>
-    </tr>
-}
+        <dd>
+            @Html.DisplayFor(model => model.CreditAccountId)
+        </dd>
 
-</table>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DocumentTypeId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+

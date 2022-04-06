@@ -41,6 +41,7 @@ namespace Api.ErpFidelitas.General.v2.Controllers
 
 			return currency.Insert(insertar);
 		}
+
 		[HttpDelete]
 		[Route("General/Currencys/BorrarUno")]
 		public Request BorrarUno(int id)
