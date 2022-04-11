@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.ErpFidelitas.General.v2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Views.ErpFidelitas.General.v2", "Views.ErpFidelitas.General.v2\Views.ErpFidelitas.General.v2.csproj", "{D82D1E9C-2768-4A08-81F4-1E01B517E983}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp.ErpFidelitas.General.v2", "WebApp.ErpFidelitas.General.v2\WebApp.ErpFidelitas.General.v2\WebApp.ErpFidelitas.General.v2.csproj", "{54E27E36-8CFC-42A1-85F3-63EE589580D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D82D1E9C-2768-4A08-81F4-1E01B517E983}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D82D1E9C-2768-4A08-81F4-1E01B517E983}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D82D1E9C-2768-4A08-81F4-1E01B517E983}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54E27E36-8CFC-42A1-85F3-63EE589580D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54E27E36-8CFC-42A1-85F3-63EE589580D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54E27E36-8CFC-42A1-85F3-63EE589580D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54E27E36-8CFC-42A1-85F3-63EE589580D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

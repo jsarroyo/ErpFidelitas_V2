@@ -2059,16 +2059,16 @@
     <Content Include="Views\Person\Create.cshtml" />
     <Content Include="Views\Person\Edit.cshtml" />
     <Content Include="Views\Person\Delete.cshtml" />
+    <Content Include="Views\Shared\_Encabezado.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Shared\_GraficoPrincipal.cshtml" />
+    <Content Include="Views\Shared\_MenuLateral.cshtml" />
+    <Content Include="Views\Shared\_MenuSuperior.cshtml" />
+    <Content Include="Views\Shared\_ModalSalirSistema.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Currency\" />
-    <Folder Include="Views\DocumentType\" />
-    <Folder Include="Views\MovementAccountReceivable\" />
-    <Folder Include="Views\MovementDebtToPay\" />
-    <Folder Include="Views\MovementInventory\" />
-    <Folder Include="Views\Parameter\" />
     <Folder Include="Views\PersonType\" />
     <Folder Include="Views\Products\" />
     <Folder Include="Views\RolUsers\" />
