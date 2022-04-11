@@ -2065,6 +2065,26 @@
     <Content Include="Views\Shared\_MenuLateral.cshtml" />
     <Content Include="Views\Shared\_MenuSuperior.cshtml" />
     <Content Include="Views\Shared\_ModalSalirSistema.cshtml" />
+    <Content Include="Views\PersonType\Index.cshtml" />
+    <Content Include="Views\PersonType\Edit.cshtml" />
+    <Content Include="Views\PersonType\Create.cshtml" />
+    <Content Include="Views\PersonType\Details.cshtml" />
+    <Content Include="Views\PersonType\Delete.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Products\Details.cshtml" />
+    <Content Include="Views\Products\Create.cshtml" />
+    <Content Include="Views\Products\Edit.cshtml" />
+    <Content Include="Views\Products\Delete.cshtml" />
+    <Content Include="Views\RolUsers\Index.cshtml" />
+    <Content Include="Views\RolUsers\Details.cshtml" />
+    <Content Include="Views\RolUsers\Create.cshtml" />
+    <Content Include="Views\RolUsers\Edit.cshtml" />
+    <Content Include="Views\RolUsers\Delete.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Details.cshtml" />
+    <Content Include="Views\User\Create.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

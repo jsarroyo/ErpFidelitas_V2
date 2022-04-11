@@ -1,23 +1,64 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Views.ErpFidelitas.General.v2.Entities;
+using Views.ErpFidelitas.General.v2.Utilities;
 
 namespace Views.ErpFidelitas.General.v2.Controllers
 {
     public class PersonTypeController : Controller
     {
+        PersonType personType;
+        List<PersonType> persont;
+        Response responseClient;
         // GET: PersonType
-        public ActionResult Index()
+        public async Task< ActionResult> Index()
         {
-            return View();
+            persont = new List<PersonType>();
+            responseClient = new Response();
+
+            using (var client = new HttpClient())
+            {
+                HttpResponseMessage response = await client.GetAsync("https://localhost:44331/General/PersonsType/ObtenerTodas");
+                if (response.IsSuccessStatusCode)
+                {
+                    var str = await response.Content.ReadAsStringAsync();
+                    responseClient = JsonConvert.DeserializeObject<Response>(str);
+                }
+                if (responseClient.Success)
+                {
+                    persont = JsonConvert.DeserializeObject<List<PersonType>>(responseClient.Value.ToString());
+                }
+            }
+            return View(persont);
         }
 
         // GET: PersonType/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            personType = new PersonType();
+            responseClient = new Response();
+
+            using (var client = new HttpClient())
+            {
+                HttpResponseMessage response = await client.GetAsync($"https://localhost:44331/General/PersonsType/ObtenerUno?id={id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var str = await response.Content.ReadAsStringAsync();
+                    responseClient = JsonConvert.DeserializeObject<Response>(str);
+                }
+                if (responseClient.Success)
+                {
+                    personType = JsonConvert.DeserializeObject<PersonType>(responseClient.Value.ToString());
+                }
+            }
+            return View(personType);
         }
 
         // GET: PersonType/Create
@@ -28,12 +69,23 @@ namespace Views.ErpFidelitas.General.v2.Controllers
 
         // POST: PersonType/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public async Task<ActionResult> Create(FormCollection collection)
         {
             try
             {
-                // TODO: Add insert logic here
+                personType = new PersonType();
+                responseClient = new Response();
 
+                using (var client = new HttpClient())
+                {
+                    var json = JsonConvert.SerializeObject(collection);
+                    var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.PostAsync($"https://localhost:44331/General/PersonsType/CrearUno", stringContent);
+
+                    string resultContent = response.Content.ReadAsStringAsync().Result;
+
+                }
                 return RedirectToAction("Index");
             }
             catch
@@ -50,12 +102,23 @@ namespace Views.ErpFidelitas.General.v2.Controllers
 
         // POST: PersonType/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public async Task<ActionResult> Edit(int id, FormCollection collection)
         {
             try
             {
-                // TODO: Add update logic here
+                personType = new PersonType();
+                responseClient = new Response();
 
+                using (var client = new HttpClient())
+                {
+                    var json = JsonConvert.SerializeObject(collection);
+                    var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.PutAsync($"https://localhost:44331/General/PersonsType/ActualizarUno", stringContent);
+
+                    string resultContent = response.Content.ReadAsStringAsync().Result;
+
+                }
                 return RedirectToAction("Index");
             }
             catch
@@ -72,12 +135,23 @@ namespace Views.ErpFidelitas.General.v2.Controllers
 
         // POST: PersonType/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public async Task<ActionResult> Delete(int id, FormCollection collection)
         {
             try
             {
-                // TODO: Add delete logic here
+                personType = new PersonType();
+                responseClient = new Response();
 
+                using (var client = new HttpClient())
+                {
+                    var json = JsonConvert.SerializeObject(collection);
+                    var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.DeleteAsync($"https://localhost:44331/General/PersonsType/BorrarUno?id={id}");
+
+                    string resultContent = response.Content.ReadAsStringAsync().Result;
+
+                }
                 return RedirectToAction("Index");
             }
             catch

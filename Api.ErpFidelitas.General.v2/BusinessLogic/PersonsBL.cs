@@ -26,7 +26,7 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				try
 				{
 					var Entidades = (from u in dBEntities.Persons
-									 where u.PersonId == insertar.PersonId
+									 where u.FirstName == insertar.FirstName
 									 select u).FirstOrDefault();
 					if (Entidades == null)
 					{
@@ -187,7 +187,6 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 		public Request Validations(Persons verificar)
 		{
 			Request request = new Request();
-
 			if (string.IsNullOrEmpty(verificar.FirstName))
 			{
 				return request.DoError("El nombre no puede estar vacio");

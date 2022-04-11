@@ -1,4 +1,4 @@
-﻿@model Views.ErpFidelitas.General.v2.Entities.DocumentType
+﻿@model Views.ErpFidelitas.General.v2.Entities.PersonType
 
 @{
     ViewBag.Title = "Delete";
@@ -9,7 +9,7 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>DocumentType</h4>
+    <h4>PersonType</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -20,26 +20,9 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DebitAccountId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DebitAccountId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreditAccountId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreditAccountId)
-        </dd>
-
     </dl>
 
-    @using (Html.BeginForm())
-    {
+    @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
