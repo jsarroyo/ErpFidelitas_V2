@@ -1,0 +1,43 @@
+﻿@model Asp.ErpFidelitas.General.v2.Entities.DocumentType
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DocumentType</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DebitAccountId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DebitAccountId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreditAccountId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreditAccountId)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DocumentTypeId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

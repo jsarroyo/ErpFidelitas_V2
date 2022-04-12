@@ -1,0 +1,35 @@
+﻿@model Asp.ErpFidelitas.General.v2.Entities.RolUsers
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>RolUsers</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RolId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RolId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeRol)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeRol)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

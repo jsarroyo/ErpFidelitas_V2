@@ -1,0 +1,129 @@
+﻿
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">Administrador contable</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active">
+        <a class="nav-link" href="index.html">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>ERP - Fidélitas</span>
+        </a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Opciones
+    </div>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdm"
+           aria-expanded="true" aria-controls="collapseAdm">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Administración</span>
+        </a>
+        <div id="collapseAdm" class="collapse" aria-labelledby="headingAdm" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Opciones de Administración:</h6>
+                <a class="collapse-item" href="~/Company">Compañía</a>
+                <a class="collapse-item" href="~/Currency">Moneda</a>
+                <a class="collapse-item" href="~/DocumentType">Tipos Documento</a>
+                <a class="collapse-item" href="~/Parameter">Parámetros</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCXP"
+           aria-expanded="true" aria-controls="collapseCXP">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Cuentas por pagar</span>
+        </a>
+        <div id="collapseCXP" class="collapse" aria-labelledby="headingCXP" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Opciones de Cuentas por Pagar:</h6>
+                <a class="collapse-item" href="~/MovementDebtToPay">Movimientos de Cuentas por Pagar</a>
+                <a class="collapse-item" href="~/Person">Proveedores</a>
+                <a class="collapse-item" href="~/Parameter">Parámetros</a>
+            </div>
+        </div>
+    </li>
+
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCXC"
+           aria-expanded="true" aria-controls="collapseCXC">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Cuentas por cobrar</span>
+        </a>
+        <div id="collapseCXC" class="collapse" aria-labelledby="headingCXC" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Opciones de Cuentas por cobrar:</h6>
+                <a class="collapse-item" href="~/MovementAccountReceivable">Movimientos de Cuentas por cobrar</a>
+                <a class="collapse-item" href="~/Person">Clientes</a>
+                <a class="collapse-item" href="~/Parameter">Parámetros</a>
+            </div>
+        </div>
+    </li>
+    <!-- Nav Item - Utilities Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSEC"
+           aria-expanded="true" aria-controls="collapseSEC">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Seguridad</span>
+        </a>
+        <div id="collapseSEC" class="collapse" aria-labelledby="headingSEC"
+             data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Seguridad:</h6> 
+                <a class="collapse-item" href="~/User">Usuarios</a>
+                <a class="collapse-item" href="~/RolUsers">Roles</a>
+                <a class="collapse-item" href="~/Parameter">Parámetros</a>
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseContabilidad"
+           aria-expanded="true" aria-controls="collapseContabilidad">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Contabilidad</span>
+        </a>
+        <div id="collapseContabilidad" class="collapse" aria-labelledby="headingContabilidad"
+             data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Contabilidad:</h6>
+                <a class="collapse-item" href="utilities-color.html">Cuentas Contables</a>
+                <a class="collapse-item" href="utilities-border.html">Asientos de Diario</a>
+                <a class="collapse-item" href="utilities-border.html">Asientos de Mayor</a>
+                <a class="collapse-item" href="Currency/Index">Parámetros</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+
+</ul>
