@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Views.ErpFidelitas.General.v2.Entities;
-using Views.ErpFidelitas.General.v2.Utilities;
-namespace Views.ErpFidelitas.General.v2.Controllers
+using WebApp.ErpFidelitas.General.v2.Entities;
+using WebApp.ErpFidelitas.General.v2.Utilities;
+namespace WebApp.ErpFidelitas.General.v2.Controllers
 {
     public class MovementDebtToPayController : Controller
     {

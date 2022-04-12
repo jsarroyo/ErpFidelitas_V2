@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Views.ErpFidelitas.General.v2.Entities
-{
-	
-     
+  
+namespace WebApp.ErpFidelitas.General.v2.Entities
+{ 
     public class MovementAccountReceivable
     {
         public int CompanyId { get; set; }

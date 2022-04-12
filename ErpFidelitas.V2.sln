@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.ErpFidelitas.General.v2", "Api.ErpFidelitas.General.v2\Api.ErpFidelitas.General.v2.csproj", "{7B80557F-8A14-4215-ACDC-65CBD0838B3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp.ErpFidelitas.General.v2", "WebApp.ErpFidelitas.General.v2\WebApp.ErpFidelitas.General.v2\WebApp.ErpFidelitas.General.v2.csproj", "{54E27E36-8CFC-42A1-85F3-63EE589580D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asp.ErpFidelitas.General.v2", "..\Asp.ErpFidelitas.General.v2\Asp.ErpFidelitas.General.v2\Asp.ErpFidelitas.General.v2.csproj", "{1AD0192E-0525-4152-8942-447277BF23CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{7B80557F-8A14-4215-ACDC-65CBD0838B3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B80557F-8A14-4215-ACDC-65CBD0838B3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B80557F-8A14-4215-ACDC-65CBD0838B3B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{54E27E36-8CFC-42A1-85F3-63EE589580D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{54E27E36-8CFC-42A1-85F3-63EE589580D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{54E27E36-8CFC-42A1-85F3-63EE589580D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{54E27E36-8CFC-42A1-85F3-63EE589580D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AD0192E-0525-4152-8942-447277BF23CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AD0192E-0525-4152-8942-447277BF23CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AD0192E-0525-4152-8942-447277BF23CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AD0192E-0525-4152-8942-447277BF23CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

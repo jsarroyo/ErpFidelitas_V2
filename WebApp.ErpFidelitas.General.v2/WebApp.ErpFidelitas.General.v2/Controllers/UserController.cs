@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Views.ErpFidelitas.General.v2.Controllers
+namespace WebApp.ErpFidelitas.General.v2.Controllers
 {
     public class UserController : Controller
     {
