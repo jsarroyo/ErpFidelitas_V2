@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.ErpFidelitas.General.v2", "Api.ErpFidelitas.General.v2\Api.ErpFidelitas.General.v2.csproj", "{7B80557F-8A14-4215-ACDC-65CBD0838B3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asp.ErpFidelitas.General.v2", "Asp.ErpFidelitas.General.v2\Asp.ErpFidelitas.General.v2\Asp.ErpFidelitas.General.v2.csproj", "{1AD0192E-0525-4152-8942-447277BF23CD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asp.ErpFidelitas.General.v2", "Asp.ErpFidelitas.General.v2\Asp.ErpFidelitas.General.v2.csproj", "{1AD0192E-0525-4152-8942-447277BF23CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
