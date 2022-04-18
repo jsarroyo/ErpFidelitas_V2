@@ -9,12 +9,18 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Asp.ErpFidelitas.General.v2.Controllers
-{
-    public class CompanyController : Controller
+{ 
+    public class CompanyController : BaseController
     {
         Company company;
         List<Company> companies;
         Response responseClient;
+        const string UrlActionPathDetails = "https://localhost:44331/General/Compania/ObtenerUno?id={0}";
+        const string UrlActionPathList = "https://localhost:44331/General/Compania/ObtenerTodas";
+        const string UrlActionPathInsertOne = "https://localhost:44331/General/Compania/CrearUno";
+        const string UrlActionPathUpdate = "https://localhost:44331/General/Compania/ActualizarUno";
+        const string UrlActionPathDelete = "$https://localhost:44331/General/Compania/BorrarUno?id={0}";
+
         // GET: Company
         public async Task<ActionResult> Index()
         {
@@ -25,7 +31,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
             {
                 using (var client = new HttpClient())
                 {
-                    HttpResponseMessage response = await client.GetAsync("https://localhost:44331/General/Compania/ObtenerTodas");
+                    HttpResponseMessage response = await client.GetAsync(UrlActionPathList);
                     if (response.IsSuccessStatusCode)
                     {
                         var str = await response.Content.ReadAsStringAsync();
@@ -39,7 +45,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
             }
             catch (Exception error)
             {
-                ViewBag.ErrorInfo = "Error al intentar conectar con servidor de datos.";
+                ViewBag.ErrorInfo = ERRORMESSAGE;
                 ViewBag.ErrorMessage = error.Message;
                 ViewBag.InnerException = error.InnerException;
                 ViewBag.StackTrace = error.StackTrace;
@@ -52,22 +58,34 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         public async Task<ActionResult> Details(int id)
         {
             company = new Company();
-            responseClient = new Response();
+            responseClient = new Response(); 
 
-            using (var client = new HttpClient())
+            try
             {
-                HttpResponseMessage response = await client.GetAsync($"https://localhost:44331/General/Compania/ObtenerUno?id={id}");
-                if (response.IsSuccessStatusCode)
+                using (var client = new HttpClient())
                 {
-                    var str = await response.Content.ReadAsStringAsync();
-                    responseClient = JsonConvert.DeserializeObject<Response>(str);
-                }
-                if (responseClient.Success)
-                {
-                    company = JsonConvert.DeserializeObject<Company>(responseClient.Value.ToString());
+                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathDetails,id));
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        company = JsonConvert.DeserializeObject<Company>(responseClient.Value.ToString());
+                    }
                 }
             }
-            return View(company);
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = "Error al intentar contactar con eservidor de datos.";
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
+            }
+            return View(companies);
+
         }
 
         // GET: Company/Create
@@ -90,7 +108,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                     var json = JsonConvert.SerializeObject(collection);
                     var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    HttpResponseMessage response = await client.PostAsync($"https://localhost:44331/General/Compania/CrearUno", stringContent);
+                    HttpResponseMessage response = await client.PostAsync(UrlActionPathInsertOne, stringContent);
 
                     string resultContent = response.Content.ReadAsStringAsync().Result;
 
@@ -124,7 +142,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                     var json = JsonConvert.SerializeObject(collection);
                     var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    HttpResponseMessage response = await client.PutAsync($"https://localhost:44331/General/Compania/ActualizarUno", stringContent);
+                    HttpResponseMessage response = await client.PutAsync(UrlActionPathUpdate, stringContent);
 
                     string resultContent = response.Content.ReadAsStringAsync().Result;
 
@@ -158,7 +176,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                     var json = JsonConvert.SerializeObject(collection);
                     var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    HttpResponseMessage response = await client.DeleteAsync($"https://localhost:44331/General/Compania/BorrarUno?id={id}");
+                    HttpResponseMessage response = await client.DeleteAsync(string.Format(UrlActionPathDetails, id));
 
                     string resultContent = response.Content.ReadAsStringAsync().Result;
 
