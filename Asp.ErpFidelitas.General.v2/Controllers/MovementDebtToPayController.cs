@@ -1,6 +1,7 @@
 ﻿using Asp.ErpFidelitas.General.v2.Entities;
 using Asp.ErpFidelitas.General.v2.Utilities;
-using Newtonsoft.Json; 
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
@@ -9,28 +10,45 @@ using System.Web.Mvc;
 
 namespace Asp.ErpFidelitas.General.v2.Controllers
 {
-    public class MovementDebtToPayController : Controller
+    public class MovementDebtToPayController : BaseController
     {
         MovementDebtToPay debtToPay;
         List<MovementDebtToPay> movements;
         Response responseClient;
+        const string UrlActionPathDetails = "https://localhost:44331/General/MovementsDebtsToPay/ObtenerUno?id={0}";
+        const string UrlActionPathList = "https://localhost:44331/General/MovementsDebtsToPay/ObtenerTodas";
+        const string UrlActionPathInsertOne = "https://localhost:44331/General/MovementsDebtsToPay/CrearUno";
+        const string UrlActionPathUpdate = "https://localhost:44331/General/MovementsDebtsToPay/ActualizarUno";
+        const string UrlActionPathDelete = "https://localhost:44331/General/MovementsDebtsToPay/BorrarUno?id={0}";
         // GET: MovementDebtToPay
         public async Task<ActionResult> Index()
         {
             movements = new List<MovementDebtToPay>();
             responseClient = new Response();
-            using (var client = new HttpClient())
+
+            try
             {
-                HttpResponseMessage response = await client.GetAsync("https://localhost:44331/General/MovementsDebtsToPay/ObtenerTodas");
-                if (response.IsSuccessStatusCode)
+                using (var client = new HttpClient())
                 {
-                    var str = await response.Content.ReadAsStringAsync();
-                    responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    HttpResponseMessage response = await client.GetAsync(UrlActionPathList);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        movements = JsonConvert.DeserializeObject<List<MovementDebtToPay>>(responseClient.Value.ToString());
+                    }
                 }
-                if (responseClient.Success)
-                {
-                    movements = JsonConvert.DeserializeObject<List<MovementDebtToPay>>(responseClient.Value.ToString());
-                }
+            }
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
             }
             return View(movements);
         }
@@ -41,20 +59,32 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
             debtToPay = new MovementDebtToPay();
             responseClient = new Response();
 
-            using (var client = new HttpClient())
+            try
             {
-                HttpResponseMessage response = await client.GetAsync($"https://localhost:44331/General/MovementsDebtsToPay/ObtenerUno?id={id}");
-                if (response.IsSuccessStatusCode)
+                using (var client = new HttpClient())
                 {
-                    var str = await response.Content.ReadAsStringAsync();
-                    responseClient = JsonConvert.DeserializeObject<Response>(str);
-                }
-                if (responseClient.Success)
-                {
-                    debtToPay = JsonConvert.DeserializeObject<MovementDebtToPay>(responseClient.Value.ToString());
+                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathDetails, id));
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        debtToPay = JsonConvert.DeserializeObject<MovementDebtToPay>(responseClient.Value.ToString());
+                    }
                 }
             }
-            return View(debtToPay);
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = "Error al intentar contactar con eservidor de datos.";
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
+            }
+            return View(movements);
+
         }
 
         // GET: MovementDebtToPay/Create
@@ -69,6 +99,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         {
             try
             {
+                debtToPay = new MovementDebtToPay();
                 responseClient = new Response();
 
                 using (var client = new HttpClient())
@@ -76,7 +107,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                     var json = JsonConvert.SerializeObject(collection);
                     var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    HttpResponseMessage response = await client.PostAsync($"https://localhost:44331/General/MovementsDebtsToPay/CrearUno", stringContent);
+                    HttpResponseMessage response = await client.PostAsync(UrlActionPathInsertOne, stringContent);
 
                     string resultContent = response.Content.ReadAsStringAsync().Result;
 
@@ -84,9 +115,13 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception error)
             {
-                return View();
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
             }
         }
 
@@ -102,6 +137,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         {
             try
             {
+                debtToPay = new MovementDebtToPay();
                 responseClient = new Response();
 
                 using (var client = new HttpClient())
@@ -109,7 +145,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                     var json = JsonConvert.SerializeObject(collection);
                     var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    HttpResponseMessage response = await client.PutAsync($"https://localhost:44331/General/MovementsDebtsToPay/ActualizarUno", stringContent);
+                    HttpResponseMessage response = await client.PutAsync(UrlActionPathUpdate, stringContent);
 
                     string resultContent = response.Content.ReadAsStringAsync().Result;
 
@@ -117,9 +153,13 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception error)
             {
-                return View();
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
             }
         }
 
@@ -135,6 +175,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         {
             try
             {
+                debtToPay = new MovementDebtToPay();
                 responseClient = new Response();
 
                 using (var client = new HttpClient())
@@ -142,7 +183,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                     var json = JsonConvert.SerializeObject(collection);
                     var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    HttpResponseMessage response = await client.DeleteAsync($"https://localhost:44331/General/MovementsDebtsToPay/BorrarUno?id={id}");
+                    HttpResponseMessage response = await client.DeleteAsync(string.Format(UrlActionPathDetails, id));
 
                     string resultContent = response.Content.ReadAsStringAsync().Result;
 
@@ -150,9 +191,13 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception error)
             {
-                return View();
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
             }
         }
     }

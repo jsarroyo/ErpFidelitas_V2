@@ -1,6 +1,7 @@
 ﻿using Asp.ErpFidelitas.General.v2.Entities;
 using Asp.ErpFidelitas.General.v2.Utilities;
-using Newtonsoft.Json; 
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
@@ -9,28 +10,46 @@ using System.Web.Mvc;
 
 namespace Asp.ErpFidelitas.General.v2.Controllers
 {
-    public class ParameterController : Controller
+    public class ParameterController : BaseController 
     {
         Parameter parameter;
         List<Parameter> parameters;
         Response responseClient;
+        const string UrlActionPathDetails = "https://localhost:44331/General/Parameters/ObtenerUno?id={0}";
+        const string UrlActionPathList = "https://localhost:44331/General/Parameters/ObtenerTodas";
+        const string UrlActionPathInsertOne = "https://localhost:44331/General/Parameters/CrearUno";
+        const string UrlActionPathUpdate = "https://localhost:44331/General/Parameters/ActualizarUno";
+        const string UrlActionPathDelete = "https://localhost:44331/General/Parameters/BorrarUno?id={0}";
+
         // GET: Parameter
         public async Task<ActionResult> Index()
         {
             parameters = new List<Parameter>();
             responseClient = new Response();
-            using (var client = new HttpClient())
+
+            try
             {
-                HttpResponseMessage response = await client.GetAsync("https://localhost:44331/General/Parameters/ObtenerTodas");
-                if (response.IsSuccessStatusCode)
+                using (var client = new HttpClient())
                 {
-                    var str = await response.Content.ReadAsStringAsync();
-                    responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    HttpResponseMessage response = await client.GetAsync(UrlActionPathList);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        parameters = JsonConvert.DeserializeObject<List<Parameter>>(responseClient.Value.ToString());
+                    }
                 }
-                if (responseClient.Success)
-                {
-                    parameters = JsonConvert.DeserializeObject<List<Parameter>>(responseClient.Value.ToString());
-                }
+            }
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
             }
             return View(parameters);
         }
@@ -41,20 +60,32 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
             parameter = new Parameter();
             responseClient = new Response();
 
-            using (var client = new HttpClient())
+            try
             {
-                HttpResponseMessage response = await client.GetAsync($"https://localhost:44331/General/Parameters/ObtenerUno?id={id}");
-                if (response.IsSuccessStatusCode)
+                using (var client = new HttpClient())
                 {
-                    var str = await response.Content.ReadAsStringAsync();
-                    responseClient = JsonConvert.DeserializeObject<Response>(str);
-                }
-                if (responseClient.Success)
-                {
-                    parameter = JsonConvert.DeserializeObject<Parameter>(responseClient.Value.ToString());
+                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathDetails, id));
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        parameter = JsonConvert.DeserializeObject<Parameter>(responseClient.Value.ToString());
+                    }
                 }
             }
-            return View(parameter);
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = "Error al intentar contactar con eservidor de datos.";
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
+            }
+            return View(parameters);
+
         }
 
         // GET: Parameter/Create
@@ -76,7 +107,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                     var json = JsonConvert.SerializeObject(collection);
                     var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    HttpResponseMessage response = await client.PostAsync($"https://localhost:44331/General/Parameters/CrearUno", stringContent);
+                    HttpResponseMessage response = await client.PostAsync(UrlActionPathInsertOne, stringContent);
 
                     string resultContent = response.Content.ReadAsStringAsync().Result;
 
@@ -84,9 +115,13 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception error)
             {
-                return View();
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
             }
         }
 
@@ -109,7 +144,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                     var json = JsonConvert.SerializeObject(collection);
                     var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    HttpResponseMessage response = await client.PutAsync($"https://localhost:44331/General/Parameters/ActualizarUno", stringContent);
+                    HttpResponseMessage response = await client.PutAsync(UrlActionPathUpdate, stringContent);
 
                     string resultContent = response.Content.ReadAsStringAsync().Result;
 
@@ -117,9 +152,13 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception error)
             {
-                return View();
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
             }
         }
 
@@ -142,7 +181,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                     var json = JsonConvert.SerializeObject(collection);
                     var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    HttpResponseMessage response = await client.DeleteAsync($"https://localhost:44331/General/Parameters/BorrarUno?id={id}");
+                    HttpResponseMessage response = await client.DeleteAsync(string.Format(UrlActionPathDetails, id));
 
                     string resultContent = response.Content.ReadAsStringAsync().Result;
 
@@ -150,9 +189,13 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception error)
             {
-                return View();
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
             }
         }
     }

@@ -19,7 +19,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         const string UrlActionPathList = "https://localhost:44331/General/Compania/ObtenerTodas";
         const string UrlActionPathInsertOne = "https://localhost:44331/General/Compania/CrearUno";
         const string UrlActionPathUpdate = "https://localhost:44331/General/Compania/ActualizarUno";
-        const string UrlActionPathDelete = "$https://localhost:44331/General/Compania/BorrarUno?id={0}";
+        const string UrlActionPathDelete = "https://localhost:44331/General/Compania/BorrarUno?id={0}";
 
         // GET: Company
         public async Task<ActionResult> Index()
@@ -99,8 +99,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         public async Task<ActionResult> Create(FormCollection collection)
         {
             try
-            {
-                company = new Company();
+            { 
                 responseClient = new Response();
 
                 using (var client = new HttpClient())
@@ -116,9 +115,13 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception error)
             {
-                return View();
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
             }
         }
 
@@ -133,8 +136,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         public async Task<ActionResult> Edit(int id, FormCollection collection)
         {
             try
-            {
-                company = new Company();
+            { 
                 responseClient = new Response();
 
                 using (var client = new HttpClient())
@@ -150,9 +152,13 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception error)
             {
-                return View();
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
             }
         }
 
@@ -167,8 +173,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         public async Task<ActionResult> Delete(int id, FormCollection collection)
         {
             try
-            {
-                company = new Company();
+            { 
                 responseClient = new Response();
 
                 using (var client = new HttpClient())
@@ -184,9 +189,13 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception error)
             {
-                return View();
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
             }
         }
 

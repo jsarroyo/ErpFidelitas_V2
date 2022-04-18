@@ -1,85 +1,202 @@
-﻿ 
+﻿using Asp.ErpFidelitas.General.v2.Entities;
+using Asp.ErpFidelitas.General.v2.Utilities;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web.Mvc;
+
 
 namespace Asp.ErpFidelitas.General.v2.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
-        // GET: User
-        public ActionResult Index()
+        User user;
+        List<User> companies;
+        Response responseClient;
+        const string UrlActionPathDetails = "https://localhost:44331/General/Users/ObtenerUno?id={0}";
+        const string UrlActionPathList = "https://localhost:44331/General/Users/ObtenerTodas";
+        const string UrlActionPathInsertOne = "https://localhost:44331/General/Users/CrearUno";
+        const string UrlActionPathUpdate = "https://localhost:44331/General/Users/ActualizarUno";
+        const string UrlActionPathDelete = "https://localhost:44331/General/Users/BorrarUno?id={0}";
+
+        // GET: Users
+        public async Task<ActionResult> Index()
         {
-            return View();
+            companies = new List<User>();
+            responseClient = new Response();
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.GetAsync(UrlActionPathList);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        companies = JsonConvert.DeserializeObject<List<User>>(responseClient.Value.ToString());
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
+            }
+            return View(companies);
         }
 
-        // GET: User/Details/5
-        public ActionResult Details(int id)
+        // GET: Users/Details/5
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            user = new User();
+            responseClient = new Response();
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathDetails, id));
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        user = JsonConvert.DeserializeObject<User>(responseClient.Value.ToString());
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = "Error al intentar contactar con eservidor de datos.";
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
+            }
+            return View(companies);
+
         }
 
-        // GET: User/Create
+        // GET: Users/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: User/Create
+        // POST: Users/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public async Task<ActionResult> Create(FormCollection collection)
         {
             try
             {
-                // TODO: Add insert logic here
+                responseClient = new Response();
+
+                using (var client = new HttpClient())
+                {
+                    var json = JsonConvert.SerializeObject(collection);
+                    var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.PostAsync(UrlActionPathInsertOne, stringContent);
+
+                    string resultContent = response.Content.ReadAsStringAsync().Result;
+
+                }
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception error)
             {
-                return View();
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
             }
         }
 
-        // GET: User/Edit/5
+        // GET: Users/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: User/Edit/5
+        // POST: Users/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public async Task<ActionResult> Edit(int id, FormCollection collection)
         {
             try
             {
-                // TODO: Add update logic here
+                responseClient = new Response();
+
+                using (var client = new HttpClient())
+                {
+                    var json = JsonConvert.SerializeObject(collection);
+                    var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.PutAsync(UrlActionPathUpdate, stringContent);
+
+                    string resultContent = response.Content.ReadAsStringAsync().Result;
+
+                }
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception error)
             {
-                return View();
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
             }
         }
 
-        // GET: User/Delete/5
+        // GET: Users/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: User/Delete/5
+        // POST: Users/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public async Task<ActionResult> Delete(int id, FormCollection collection)
         {
             try
             {
-                // TODO: Add delete logic here
+                responseClient = new Response();
+
+                using (var client = new HttpClient())
+                {
+                    var json = JsonConvert.SerializeObject(collection);
+                    var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.DeleteAsync(string.Format(UrlActionPathDetails, id));
+
+                    string resultContent = response.Content.ReadAsStringAsync().Result;
+
+                }
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception error)
             {
-                return View();
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
             }
         }
     }

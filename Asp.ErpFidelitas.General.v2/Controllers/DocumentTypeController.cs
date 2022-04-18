@@ -10,53 +10,83 @@ using System.Web.Mvc;
 
 namespace Asp.ErpFidelitas.General.v2.Controllers
 {
-    public class DocumentTypeController : Controller
+    public class DocumentTypeController : BaseController
     {
-        DocumentType documentTip;
-        List<DocumentType> document;
+        DocumentType docType;
+        List<DocumentType> documentTypes;
         Response responseClient;
+        const string UrlActionPathDetails = "https://localhost:44331/General/DocumentTypes/ObtenerUno?id={0}";
+        const string UrlActionPathList = "https://localhost:44331/General/DocumentTypes/ObtenerTodas";
+        const string UrlActionPathInsertOne = "https://localhost:44331/General/DocumentTypes/CrearUno";
+        const string UrlActionPathUpdate = "https://localhost:44331/General/DocumentTypes/ActualizarUno";
+        const string UrlActionPathDelete = "https://localhost:44331/General/DocumentTypes/BorrarUno?id={0}";
+
+
         // GET: DocumentType
-        public  async Task<ActionResult> Index()
+        public async Task<ActionResult> Index()
         {
-            document = new List<DocumentType>();
+            documentTypes = new List<DocumentType>();
             responseClient = new Response();
 
-            using (var client = new HttpClient())
+            try
             {
-                HttpResponseMessage response = await client.GetAsync("https://localhost:44331/General/DocumentTypes/ObtenerTodas");
-                if (response.IsSuccessStatusCode)
+                using (var client = new HttpClient())
                 {
-                    var str = await response.Content.ReadAsStringAsync();
-                    responseClient = JsonConvert.DeserializeObject<Response>(str);
-                }
-                if (responseClient.Success)
-                {
-                    document = JsonConvert.DeserializeObject<List<DocumentType>>(responseClient.Value.ToString());
+                    HttpResponseMessage response = await client.GetAsync(UrlActionPathList);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        documentTypes = JsonConvert.DeserializeObject<List<DocumentType>>(responseClient.Value.ToString());
+                    }
                 }
             }
-            return View(document);
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
+            }
+            return View(documentTypes);
         }
 
         // GET: DocumentType/Details/5
-        public async Task< ActionResult> Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            documentTip = new DocumentType();
+            docType = new DocumentType();
             responseClient = new Response();
 
-            using (var client = new HttpClient())
+            try
             {
-                HttpResponseMessage response = await client.GetAsync($"https://localhost:44331/General/DocumentTypes/ObtenerUno?id={id}");
-                if (response.IsSuccessStatusCode)
+                using (var client = new HttpClient())
                 {
-                    var str = await response.Content.ReadAsStringAsync();
-                    responseClient = JsonConvert.DeserializeObject<Response>(str);
-                }
-                if (responseClient.Success)
-                {
-                    documentTip = JsonConvert.DeserializeObject<DocumentType>(responseClient.Value.ToString());
+                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathDetails, id));
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        docType = JsonConvert.DeserializeObject<DocumentType>(responseClient.Value.ToString());
+                    }
                 }
             }
-            return View(documentTip);
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = "Error al intentar contactar con eservidor de datos.";
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
+            }
+            return View(documentTypes);
+
         }
 
         // GET: DocumentType/Create
@@ -67,11 +97,11 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
 
         // POST: DocumentType/Create
         [HttpPost]
-        public async Task< ActionResult> Create(FormCollection collection)
+        public async Task<ActionResult> Create(FormCollection collection)
         {
             try
             {
-                documentTip = new DocumentType();
+                docType = new DocumentType();
                 responseClient = new Response();
 
                 using (var client = new HttpClient())
@@ -79,7 +109,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                     var json = JsonConvert.SerializeObject(collection);
                     var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    HttpResponseMessage response = await client.PostAsync($"https://localhost:44331/General/DocumentTypes/CrearUno", stringContent);
+                    HttpResponseMessage response = await client.PostAsync(UrlActionPathInsertOne, stringContent);
 
                     string resultContent = response.Content.ReadAsStringAsync().Result;
 
@@ -87,9 +117,13 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception error)
             {
-                return View();
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
             }
         }
 
@@ -101,11 +135,11 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
 
         // POST: DocumentType/Edit/5
         [HttpPost]
-        public async Task< ActionResult> Edit(int id, FormCollection collection)
+        public async Task<ActionResult> Edit(int id, FormCollection collection)
         {
             try
             {
-                documentTip = new DocumentType();
+                docType = new DocumentType();
                 responseClient = new Response();
 
                 using (var client = new HttpClient())
@@ -113,16 +147,21 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                     var json = JsonConvert.SerializeObject(collection);
                     var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    HttpResponseMessage response = await client.PutAsync($"https://localhost:44331/General/DocumentTypes/ActualizarUno", stringContent);
+                    HttpResponseMessage response = await client.PutAsync(UrlActionPathUpdate, stringContent);
 
                     string resultContent = response.Content.ReadAsStringAsync().Result;
 
                 }
+
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception error)
             {
-                return View();
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
             }
         }
 
@@ -134,10 +173,11 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
 
         // POST: DocumentType/Delete/5
         [HttpPost]
-        public  async Task< ActionResult> Delete(int id, FormCollection collection)
+        public async Task<ActionResult> Delete(int id, FormCollection collection)
         {
             try
             {
+                docType = new DocumentType();
                 responseClient = new Response();
 
                 using (var client = new HttpClient())
@@ -145,16 +185,21 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                     var json = JsonConvert.SerializeObject(collection);
                     var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    HttpResponseMessage response = await client.DeleteAsync($"https://localhost:44331/General/DocumentTypes/BorrarUno?id={id}");
+                    HttpResponseMessage response = await client.DeleteAsync(string.Format(UrlActionPathDetails, id));
 
                     string resultContent = response.Content.ReadAsStringAsync().Result;
 
                 }
+
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception error)
             {
-                return View();
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
             }
         }
     }
