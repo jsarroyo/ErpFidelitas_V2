@@ -14,7 +14,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
     public class UserController : BaseController
     {
         User user;
-        List<User> companies;
+        List<User> usuarios;
         Response responseClient;
         const string UrlActionPathDetails = "https://localhost:44331/General/Users/ObtenerUno?id={0}";
         const string UrlActionPathList = "https://localhost:44331/General/Users/ObtenerTodas";
@@ -25,7 +25,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         // GET: Users
         public async Task<ActionResult> Index()
         {
-            companies = new List<User>();
+            usuarios = new List<User>();
             responseClient = new Response();
 
             try
@@ -40,7 +40,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                     }
                     if (responseClient.Success)
                     {
-                        companies = JsonConvert.DeserializeObject<List<User>>(responseClient.Value.ToString());
+                        usuarios = JsonConvert.DeserializeObject<List<User>>(responseClient.Value.ToString());
                     }
                 }
             }
@@ -52,7 +52,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                 ViewBag.StackTrace = error.StackTrace;
                 return View("Error");
             }
-            return View(companies);
+            return View(usuarios);
         }
 
         // GET: Users/Details/5
@@ -85,7 +85,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                 ViewBag.StackTrace = error.StackTrace;
                 return View("Error");
             }
-            return View(companies);
+            return View(user);
 
         }
 
@@ -97,7 +97,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
 
         // POST: Users/Create
         [HttpPost]
-        public async Task<ActionResult> Create(FormCollection collection)
+        public async Task<ActionResult> Create(User collection)
         {
             try
             {
@@ -127,14 +127,41 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         }
 
         // GET: Users/Edit/5
-        public ActionResult Edit(int id)
+        public async Task< ActionResult> Edit(int id)
         {
-            return View();
+            user = new User();
+            responseClient = new Response();
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathDetails, id));
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        user = JsonConvert.DeserializeObject<User>(responseClient.Value.ToString());
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = "Error al intentar contactar con eservidor de datos.";
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
+            }
+            return View(user);
         }
 
         // POST: Users/Edit/5
         [HttpPost]
-        public async Task<ActionResult> Edit(int id, FormCollection collection)
+        public async Task<ActionResult> Edit(int id, User collection)
         {
             try
             {
@@ -164,14 +191,41 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         }
 
         // GET: Users/Delete/5
-        public ActionResult Delete(int id)
+        public async Task< ActionResult> Delete(int id)
         {
-            return View();
+            user = new User();
+            responseClient = new Response();
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathDetails, id));
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        user = JsonConvert.DeserializeObject<User>(responseClient.Value.ToString());
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = "Error al intentar contactar con eservidor de datos.";
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
+            }
+            return View(user);
         }
 
         // POST: Users/Delete/5
         [HttpPost]
-        public async Task<ActionResult> Delete(int id, FormCollection collection)
+        public async Task<ActionResult> Delete(int id, User collection)
         {
             try
             {

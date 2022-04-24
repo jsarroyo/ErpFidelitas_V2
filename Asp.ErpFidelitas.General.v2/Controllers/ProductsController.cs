@@ -14,18 +14,18 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
    
     public class ProductsController : BaseController
     {
-        Product company;
-        List<Product> companies;
+        Product producto;
+        List<Product> productos;
         Response responseClient;
-        const string UrlActionPathDetails = "https://localhost:44331/General/Products/ObtenerUno?id={0}";
+        const string UrlActionPathDetails = "https://localhost:44331/General/Products/ObtenerUno?id={0}&CompanyId={1}";
         const string UrlActionPathList = "https://localhost:44331/General/Products/ObtenerTodas";
         const string UrlActionPathInsertOne = "https://localhost:44331/General/Products/CrearUno";
         const string UrlActionPathUpdate = "https://localhost:44331/General/Products/ActualizarUno";
-        const string UrlActionPathDelete = "https://localhost:44331/General/Products/BorrarUno?id={0}";
+        const string UrlActionPathDelete = "https://localhost:44331/General/Products/BorrarUno?id={0}&CompanyId={1}";
         // GET: Products
         public async Task<ActionResult> Index()
         {
-            companies = new List<Product>();
+            productos = new List<Product>();
             responseClient = new Response();
 
             try
@@ -40,7 +40,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                     }
                     if (responseClient.Success)
                     {
-                        companies = JsonConvert.DeserializeObject<List<Product>>(responseClient.Value.ToString());
+                        productos = JsonConvert.DeserializeObject<List<Product>>(responseClient.Value.ToString());
                     }
                 }
             }
@@ -52,20 +52,19 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                 ViewBag.StackTrace = error.StackTrace;
                 return View("Error");
             }
-            return View(companies);
+            return View(productos);
         }
 
         // GET: Products/Details/5
-        public async Task<ActionResult> Details(int id)
+        public async Task<ActionResult> Details(int CompanyId, int id)
         {
-            company = new Product();
+            producto = new Product();
             responseClient = new Response();
-
             try
             {
                 using (var client = new HttpClient())
                 {
-                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathDetails, id));
+                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathDetails, id,CompanyId));
                     if (response.IsSuccessStatusCode)
                     {
                         var str = await response.Content.ReadAsStringAsync();
@@ -73,7 +72,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                     }
                     if (responseClient.Success)
                     {
-                        company = JsonConvert.DeserializeObject<Product>(responseClient.Value.ToString());
+                        producto = JsonConvert.DeserializeObject<Product>(responseClient.Value.ToString());
                     }
                 }
             }
@@ -85,7 +84,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                 ViewBag.StackTrace = error.StackTrace;
                 return View("Error");
             }
-            return View(companies);
+            return View(producto);
 
         }
 
@@ -97,7 +96,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
 
         // POST: Products/Create
         [HttpPost]
-        public async Task<ActionResult> Create(FormCollection collection)
+        public async Task<ActionResult> Create(Product collection)
         {
             try
             {
@@ -127,14 +126,42 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         }
 
         // GET: Products/Edit/5
-        public ActionResult Edit(int id)
+        public  async Task< ActionResult >Edit(int CompanyId,int id)
         {
-            return View();
+            producto = new Product();
+            responseClient = new Response();
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathDetails, id,CompanyId));
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        producto = JsonConvert.DeserializeObject<Product>(responseClient.Value.ToString());
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = "Error al intentar contactar con eservidor de datos.";
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
+            }
+            return View(producto);
+
         }
 
         // POST: Products/Edit/5
         [HttpPost]
-        public async Task<ActionResult> Edit(int id, FormCollection collection)
+        public async Task<ActionResult> Edit(int id, Product collection)
         {
             try
             {
@@ -164,14 +191,42 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         }
 
         // GET: Products/Delete/5
-        public ActionResult Delete(int id)
+        public async Task< ActionResult >Delete(int CompanyId,int id)
         {
-            return View();
+            producto = new Product();
+            responseClient = new Response();
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathDetails, id, CompanyId));
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        producto = JsonConvert.DeserializeObject<Product>(responseClient.Value.ToString());
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = "Error al intentar contactar con eservidor de datos.";
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
+            }
+            return View(producto);
+
         }
 
         // POST: Products/Delete/5
         [HttpPost]
-        public async Task<ActionResult> Delete(int id, FormCollection collection)
+        public async Task<ActionResult> Delete(int id, Product collection)
         {
             try
             {

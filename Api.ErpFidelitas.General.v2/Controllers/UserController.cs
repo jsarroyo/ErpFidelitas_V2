@@ -15,7 +15,7 @@ namespace Api.ErpFidelitas.General.v2.Controllers
 		UserBL myUser;
 		//[FiltroSeguridad]
 		[HttpGet]
-		[Route("General/User/ObtenerUno")]
+		[Route("General/Users/ObtenerUno")]
 		public Request ObtenerUno(int id)
 		{
 			myUser = new UserBL();
@@ -23,7 +23,7 @@ namespace Api.ErpFidelitas.General.v2.Controllers
 			return myUser.GetById(id);
 		}
 		[HttpGet]
-		[Route("General/User/ObtenerTodas")]
+		[Route("General/Users/ObtenerTodas")]
 		public Request ObtenerTodas()
 		{
 			myUser = new UserBL();
@@ -32,7 +32,7 @@ namespace Api.ErpFidelitas.General.v2.Controllers
 		}
 		//[FiltroSeguridad]
 		[HttpPost]
-		[Route("General/User/CrearUno")]
+		[Route("General/Users/CrearUno")]
 		public Request CrearUno(Users insertar)
 		{
 			myUser = new UserBL();
@@ -41,7 +41,7 @@ namespace Api.ErpFidelitas.General.v2.Controllers
 		}
 
 		[HttpDelete]
-		[Route("General/User/BorrarUno")]
+		[Route("General/Users/BorrarUno")]
 		public Request BorrarUno(int id)
 		{
 			myUser = new UserBL();
@@ -49,7 +49,7 @@ namespace Api.ErpFidelitas.General.v2.Controllers
 			return myUser.Delete(id);
 		}
 		[HttpPut]
-		[Route("General/User/ActualizarUno")]
+		[Route("General/Users/ActualizarUno")]
 		public Request ActualizarUno(Users insertar)
 		{
 			myUser = new UserBL();

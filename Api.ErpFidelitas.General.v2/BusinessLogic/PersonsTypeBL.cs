@@ -10,7 +10,7 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 		public PersonsTypeBL()
 		{
 		}
-		public Request GetById(int CompanyId, object id)
+		public Request GetById(int CompanyId, object id=null)
 		{
 			Request request = new Request();
 			using (var dBEntities = new ErpDBEntities())
@@ -98,7 +98,7 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 			}
 
 		}
-		public Request GetAll(int CompanyId=0)
+		public Request GetAll(int Company=0)
 		{
 			Request request = new Request();
 			using (var dBEntities = new ErpDBEntities())

@@ -10,7 +10,7 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 		public ProductsBL()
 		{
 		}
-		public Request GetById(int Company,object id)
+		public Request GetById(int CompanyId=0, object id = null)
 		{
 			Request request = new Request();
 			using (var dBEntities = new ErpDBEntities())
@@ -21,7 +21,7 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				{
 					var Entidades = (from u in dBEntities.Products
 									 where u.ProductId == (int)id
-									 && u.CompanyId == Company
+									  && u.CompanyId == CompanyId
 									 select u).FirstOrDefault();
 					if (Entidades == null)
 					{
@@ -71,7 +71,7 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				}
 			}
 		}
-		public Request Delete(int Company,object id)
+		public Request Delete(int CompanyId = 0, object id=null)
 		{
 
 			Request request = new Request();
@@ -83,7 +83,7 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				{
 					var Entidades = (from u in dBEntities.Products
 									 where u.ProductId == (int)id
-									  && u.CompanyId == Company
+									  && u.CompanyId == CompanyId
 									 select u).FirstOrDefault();
 					if (Entidades == null)
 					{
@@ -102,7 +102,7 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 			}
 
 		}
-		public Request GetAll(int Company)
+		public Request GetAll(int CompanyId =0)
 		{
 			Request request = new Request();
 			using (var dBEntities = new ErpDBEntities())
@@ -112,7 +112,7 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				try
 				{
 					var Entidades = (from u in dBEntities.Products
-									 where  u.CompanyId == Company
+
 									 select u).ToList();
 					if (Entidades == null)
 					{
