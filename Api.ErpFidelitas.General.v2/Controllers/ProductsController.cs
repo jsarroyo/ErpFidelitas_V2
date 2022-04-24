@@ -8,48 +8,49 @@ namespace Api.ErpFidelitas.General.v2.Controllers
 {
     public class ProductsController : ApiController
     {
-		ProductsBL myPersons;
+		ProductsBL myProducto;
 		//[FiltroSeguridad]
 		[HttpGet]
 		[Route("General/Products/ObtenerUno")]
-		public Request ObtenerUno(int Company,int id)
+		public Request ObtenerUno(int CompanyId,int id)
 		{
-			myPersons = new ProductsBL();
+			myProducto = new ProductsBL();
 
-			return myPersons.GetById(Company, id);
+			return myProducto.GetById(CompanyId, id);
 		}
+
 		[HttpGet]
 		[Route("General/Products/ObtenerTodas")]
-		public Request ObtenerTodas(int Company)
+		public Request ObtenerTodas()
 		{
-			myPersons = new ProductsBL();
+			myProducto = new ProductsBL();
 
-			return myPersons.GetAll(Company);
+			return myProducto.GetAll();
 		}
 		//[FiltroSeguridad]
 		[HttpPost]
 		[Route("General/Products/CrearUno")]
 		public Request CrearUno(Products insertar)
 		{
-			myPersons = new ProductsBL();
+			myProducto = new ProductsBL();
 
-			return myPersons.Insert(insertar);
+			return myProducto.Insert(insertar);
 		}
 		[HttpDelete]
 		[Route("General/Products/BorrarUno")]
-		public Request BorrarUno(int Company, int id)
+		public Request BorrarUno(int CompanyId, int id)
 		{
-			myPersons = new ProductsBL();
+			myProducto = new ProductsBL();
 
-			return myPersons.Delete(Company, id);
-		}
+			return myProducto.Delete(CompanyId, id);
+		}	
 		[HttpPut]
 		[Route("General/Products/ActualizarUno")]
 		public Request ActualizarUno(Products insertar)
 		{
-			myPersons = new ProductsBL();
+			myProducto = new ProductsBL();
 
-			return myPersons.UpdateById(insertar);
+			return myProducto.UpdateById(insertar);
 		}
 	}
 }

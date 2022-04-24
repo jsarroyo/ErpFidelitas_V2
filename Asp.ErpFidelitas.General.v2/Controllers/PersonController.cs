@@ -86,7 +86,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                 ViewBag.StackTrace = error.StackTrace;
                 return View("Error");
             }
-            return View(persons);
+            return View(personNew);
 
         }
 
@@ -98,7 +98,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
 
         // POST: Person/Create
         [HttpPost]
-        public async Task<ActionResult> Create(FormCollection collection)
+        public async Task<ActionResult> Create(Person collection)
         {
             try
             {
@@ -128,14 +128,41 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         }
 
         // GET: Person/Edit/5
-        public ActionResult Edit(int id)
+        public async Task< ActionResult> Edit(int id)
         {
-            return View();
+            personNew = new Person();
+            responseClient = new Response();
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathDetails, id));
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        personNew = JsonConvert.DeserializeObject<Person>(responseClient.Value.ToString());
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = "Error al intentar contactar con eservidor de datos.";
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
+            }
+            return View(personNew);
         }
 
         // POST: Person/Edit/5
         [HttpPost]
-        public async Task<ActionResult> Edit(int id, FormCollection collection)
+        public async Task<ActionResult> Edit(int id, Person collection)
         {
             try
             {
@@ -165,14 +192,41 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         }
 
         // GET: Person/Delete/5
-        public ActionResult Delete(int id)
+        public async Task< ActionResult> Delete(int id)
         {
-            return View();
+            personNew = new Person();
+            responseClient = new Response();
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathDetails, id));
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        personNew = JsonConvert.DeserializeObject<Person>(responseClient.Value.ToString());
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = "Error al intentar contactar con eservidor de datos.";
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
+            }
+            return View(personNew);
         }
 
         // POST: Person/Delete/5
         [HttpPost]
-        public async Task<ActionResult> Delete(int id, FormCollection collection)
+        public async Task<ActionResult> Delete(int id, Person collection)
         {
             try
             {
