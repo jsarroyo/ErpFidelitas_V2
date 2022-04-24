@@ -1,4 +1,5 @@
-﻿using Asp.ErpFidelitas.General.v2.Entities;
+﻿using Asp.ErpFidelitas.General.v2.App_Start;
+using Asp.ErpFidelitas.General.v2.Entities;
 using Asp.ErpFidelitas.General.v2.Utilities;
 using Newtonsoft.Json;
 using System;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 
 namespace Asp.ErpFidelitas.General.v2.Controllers
 {
+    [AutorizarFiltro]
     public class MovementDebtToPayController : BaseController
     {
         MovementDebtToPay debtToPay;
@@ -83,19 +85,20 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                 ViewBag.StackTrace = error.StackTrace;
                 return View("Error");
             }
-            return View(movements);
+            return View(debtToPay);
 
         }
 
         // GET: MovementDebtToPay/Create
         public ActionResult Create()
         {
-            return View();
+            
+            return View(new MovementDebtToPay());
         }
 
         // POST: MovementDebtToPay/Create
         [HttpPost]
-        public async Task<ActionResult> Create(FormCollection collection)
+        public async Task<ActionResult> Create(MovementDebtToPay collection)
         {
             try
             {
@@ -126,14 +129,41 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         }
 
         // GET: MovementDebtToPay/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            debtToPay = new MovementDebtToPay();
+            responseClient = new Response();
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathDetails, id));
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        debtToPay = JsonConvert.DeserializeObject<MovementDebtToPay>(responseClient.Value.ToString());
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = "Error al intentar contactar con eservidor de datos.";
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
+            }
+            return View(debtToPay);
         }
 
         // POST: MovementDebtToPay/Edit/5
         [HttpPost]
-        public async Task<ActionResult> Edit(int id, FormCollection collection)
+        public async Task<ActionResult> Edit(int id, MovementDebtToPay collection)
         {
             try
             {
@@ -164,14 +194,41 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         }
 
         // GET: MovementDebtToPay/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            debtToPay = new MovementDebtToPay();
+            responseClient = new Response();
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathDetails, id));
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        debtToPay = JsonConvert.DeserializeObject<MovementDebtToPay>(responseClient.Value.ToString());
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = "Error al intentar contactar con eservidor de datos.";
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
+            }
+            return View(debtToPay);
         }
 
         // POST: MovementDebtToPay/Delete/5
         [HttpPost]
-        public async Task<ActionResult> Delete(int id, FormCollection collection)
+        public async Task<ActionResult> Delete(int id, MovementDebtToPay collection)
         {
             try
             {

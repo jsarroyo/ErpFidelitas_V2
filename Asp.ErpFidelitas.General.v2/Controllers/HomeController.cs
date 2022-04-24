@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Asp.ErpFidelitas.General.v2.App_Start;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,6 +7,7 @@ using System.Web.Mvc;
 
 namespace Asp.ErpFidelitas.General.v2.Controllers
 {
+	[AutorizarFiltro]
 	public class HomeController : Controller
 	{
 		public ActionResult Index()

@@ -11,8 +11,9 @@ var LoginJS = function(){
         $("#txtEmailValidationText").text("");
         $("#txtPasswordValidationText").text("");
 
-        $("#lnkLogin").attr("onclick", "");
-        $("#lnkLogin").click(function (e) { userOne.login(); });
+/*        $("#lnkLogin").click(function (e) { userOne.login(); });*/
+        $("#formLogin").submit(userOne.login);
+        $("#formRegister").submit(userOne.register);
         $("#txtEmail").keypress(function (e) { userOne.EliminaMensajes(); });
         $("#txtPassword").keypress(function (e) { userOne.EliminaMensajes(); });
     };
@@ -26,32 +27,106 @@ var LoginJS = function(){
             $("#txtEmailValidationText").text("Debe indicar el email");
             alertify.alert('Debe indicar el email');
             $("#txtEmail").focus();
-            return;
+            return false;
         }
         if (IsUndefined(email)) {
             $("#txtEmailValidationText").text("Debe indicar el email");
             alertify.alert('Debe indicar el email');
             $("#txtEmail").focus();
-            return;
+            return false;
         }
         if (IsEmpty(password)) {
             $("#txtPasswordValidationText").text("Debe indicar la contraseña.");
             alertify.alert('Debe indicar la contraseña');
             $("#txtPassword").focus();
-            return;
+            return false;
+        }
+        if (IsUndefined(password)) {
+            $("#txtEmailValidationText").text("Debe indicar la contraseña");
+            alertify.alert('Debe indicar el email');
+            $("#txtEmail").focus();
+            return false;
+        }
+        if (!IsValidEmailFormat()) {
+            alertify.alert('Formato de email incorrecto.')
+            return false;
+        }
+
+        return true;
+    };
+
+    this.register = function () {
+        email = $("#txtEmail").val();
+        name = $("#txtName").val();
+        username = $("#txtUserName").val();
+        password = $("#txtPassword").val();
+        password2 = $("#txtPassword2").val();
+        if (password != password2) {
+            alertify.alert('Las contraseñas no coinciden');
+            $("#txtPassword").focus();
+            return false;
+        }
+
+        if (IsEmpty(email)) {
+            $("#txtEmailValidationText").text("Debe indicar el email");
+            alertify.alert('Debe indicar el email');
+            $("#txtEmail").focus();
+            return false;
+        }
+        if (IsUndefined(email)) {
+            $("#txtEmailValidationText").text("Debe indicar el email");
+            alertify.alert('Debe indicar el email');
+            $("#txtEmail").focus();
+            return false;
+        }
+        if (IsEmpty(name)) {
+            alertify.alert('Debe indicar un nombre');
+            $("#txtName").focus();
+            return false;
+        }
+        if (IsUndefined(name)) {
+            alertify.alert('Debe indicar un nombre');
+            $("#txtName").focus();
+            return false;
+        }
+        if (IsEmpty(username)) {
+            alertify.alert('Debe indicar un nombre de usuario');
+            $("#txtUserName").focus();
+            return false;
+        }
+        if (IsUndefined(username)) {
+            alertify.alert('Debe indicar un nombre de usuario');
+            $("#txtUserName").focus();
+            return false;
+        }
+        if (IsEmpty(password)) {
+            $("#txtPasswordValidationText").text("Debe indicar la contraseña.");
+            alertify.alert('Debe indicar la contraseña');
+            $("#txtPassword").focus();
+            return false;
         }
         if (IsUndefined(password)) {
             $("#txtEmailValidationText").text("Debe indicar el email");
             alertify.alert('Debe indicar el email');
             $("#txtEmail").focus();
-            return;
+            return false;
+        } if (IsEmpty(password2)) {
+            alertify.alert('Debe indicar la contraseña de verificación.');
+            $("#txtPassword2").focus();
+            return false;
+        }
+        if (IsUndefined(password2)) {
+            alertify.alert('Debe indicar la contraseña de verificación.');
+            $("#txtPassword2").focus();
+            return false;
         }
         if (!IsValidEmailFormat()) {
-            return;
+            alertify.alert('Formato de email incorrecto.')
+            return false;
         }
 
-        console.log(this.email, 'has logged in');
-    };
+        return true;
+    }
 
     this.EliminaMensajes = function () {
         if ($("#txtEmail").val().length >= 1) {

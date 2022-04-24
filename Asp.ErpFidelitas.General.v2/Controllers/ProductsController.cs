@@ -1,4 +1,5 @@
-﻿using Asp.ErpFidelitas.General.v2.Entities;
+﻿using Asp.ErpFidelitas.General.v2.App_Start;
+using Asp.ErpFidelitas.General.v2.Entities;
 using Asp.ErpFidelitas.General.v2.Utilities;
 using Newtonsoft.Json;
 using System;
@@ -11,7 +12,7 @@ using System.Web.Mvc;
 
 namespace Asp.ErpFidelitas.General.v2.Controllers
 {
-   
+    [AutorizarFiltro]
     public class ProductsController : BaseController
     {
         Product company;

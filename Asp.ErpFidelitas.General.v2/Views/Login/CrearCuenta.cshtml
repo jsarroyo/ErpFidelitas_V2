@@ -1,4 +1,4 @@
-﻿
+﻿@model Asp.ErpFidelitas.General.v2.Entities.User
 @{
     ViewBag.Title = "CrearCuenta";
     Layout = "~/Views/Shared/_LayoutSecurity.cshtml";
@@ -14,36 +14,47 @@
                     <div class="text-center">
                         <h1 class="h4 text-gray-900 mb-4">Crear una cuenta!</h1>
                     </div>
-                    <form class="user">
-                        <div class="form-group row">
-                            <div class="col-sm-6 mb-3 mb-sm-0">
-                                <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                       placeholder="First Name">
-                            </div>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control form-control-user" id="exampleLastName"
-                                       placeholder="Last Name">
-                            </div>
-                        </div>
+                    @*<form class="user">*@
+                    @using (Html.BeginForm("CrearCuenta", "Login", FormMethod.Post, new { @class = "user", id = "formRegister" }))
+                    {
+
+
+                <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        @*<input type="text" class="form-control form-control-user" id="exampleFirstName"
+            placeholder="First Name">*@
+                        @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control form-control-user", type = "text", id = "txtName", placeholder = "First Name" })
+                    </div>
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        @*<input type="text" class="form-control form-control-user" id="exampleFirstName"
+            placeholder="First Name">*@
+                        @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-user", type = "text", id = "txtUserName", placeholder = "Username" })
+                    </div>
+                </div>
                         <div class="form-group">
-                            <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                   placeholder="Email Address">
+                            @*<input type="email" class="form-control form-control-user" id="exampleInputEmail"
+                placeholder="Email Address">*@
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control form-control-user", type = "email", id = "txtEmail", placeholder = "Email Address" })
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-6 mb-3 mb-sm-0">
-                                <input type="password" class="form-control form-control-user"
-                                       id="exampleInputPassword" placeholder="Password">
+                                @*<input type="password" class="form-control form-control-user"
+                    id="exampleInputPassword" placeholder="Password">*@
+                                @Html.TextBoxFor(model => model.Password, new { @class = "form-control form-control-user", type = "password", id = "txtPassword", placeholder = "Password" })
                             </div>
                             <div class="col-sm-6">
-                                <input type="password" class="form-control form-control-user"
-                                       id="exampleRepeatPassword" placeholder="Repeat Password">
+                                @*<input type="password" class="form-control form-control-user"
+                    id="exampleRepeatPassword" placeholder="Repeat Password">*@
+                                @Html.TextBoxFor(model => model.Password, new { @class = "form-control form-control-user", type = "password", id = "txtPassword2", placeholder = "Repet password" })
                             </div>
                         </div>
-                        <a href="login.html" class="btn btn-primary btn-user btn-block">
-                            Register Account
-                        </a>
+                        @*<a href="login.html" class="btn btn-primary btn-user btn-block">
+                Register Account
+            </a>*@
+                        <input id="lnkRegister" class="btn btn-primary btn-user btn-block" type="submit" value="Registrar" />
                         <hr>
-                    </form>
+                    }
+                    @*</form>*@
                     <hr>
 
 
@@ -55,7 +66,7 @@
                         @Html.ActionLink("Ya tienes una cuenta?", "Index", "Login")
                         @*<a class="small" href="register.html">Crear cuenta</a>*@
                     </div>
-                     
+
                 </div>
             </div>
         </div>

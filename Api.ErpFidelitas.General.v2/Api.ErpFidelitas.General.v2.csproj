@@ -104,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BusinessLogic\AuthenticationBL.cs" />
     <Compile Include="BusinessLogic\CompaniesBL.cs" />
     <Compile Include="BusinessLogic\CurrencysBL.cs" />
     <Compile Include="BusinessLogic\DocumentTypesBL.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="BusinessLogic\ProductsBL.cs" />
     <Compile Include="BusinessLogic\RolUsersBL.cs" />
     <Compile Include="BusinessLogic\UserBL.cs" />
+    <Compile Include="Controllers\AuthenticationController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\CurrencysController.cs" />
     <Compile Include="Controllers\DocumentTypesController.cs" />

@@ -1,4 +1,5 @@
-﻿using Asp.ErpFidelitas.General.v2.Entities;
+﻿using Asp.ErpFidelitas.General.v2.App_Start;
+using Asp.ErpFidelitas.General.v2.Entities;
 using Asp.ErpFidelitas.General.v2.Utilities;
 using Newtonsoft.Json;
 using System;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 
 namespace Asp.ErpFidelitas.General.v2.Controllers
 { 
+    [AutorizarFiltro]
     public class CompanyController : BaseController
     {
         Company company;
@@ -96,7 +98,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
 
         // POST: Company/Create
         [HttpPost]
-        public async Task<ActionResult> Create(FormCollection collection)
+        public async Task<ActionResult> Create(Company collection)
         {
             try
             { 

@@ -1,4 +1,5 @@
-﻿using Asp.ErpFidelitas.General.v2.Entities;
+﻿using Asp.ErpFidelitas.General.v2.App_Start;
+using Asp.ErpFidelitas.General.v2.Entities;
 using Asp.ErpFidelitas.General.v2.Utilities;
 using Newtonsoft.Json;
 using System;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 
 namespace Asp.ErpFidelitas.General.v2.Controllers
 {
+    [AutorizarFiltro]
     public class MovementAccountReceivableController : BaseController
     {
         MovementAccountReceivable movAccRec;
@@ -84,7 +86,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                 ViewBag.StackTrace = error.StackTrace;
                 return View("Error");
             }
-            return View(movAccReceivables);
+            return View(movAccRec);
 
         }
 
@@ -96,7 +98,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
 
         // POST: MovementAccountReceivable/Create
         [HttpPost]
-        public async Task<ActionResult> Create(FormCollection collection)
+        public async Task<ActionResult> Create(MovementAccountReceivable collection)
         {
             try
             {
@@ -127,14 +129,41 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         }
 
         // GET: MovementAccountReceivable/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            movAccRec = new MovementAccountReceivable();
+            responseClient = new Response();
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathDetails, id));
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        movAccRec = JsonConvert.DeserializeObject<MovementAccountReceivable>(responseClient.Value.ToString());
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = "Error al intentar contactar con eservidor de datos.";
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
+            }
+            return View(movAccRec);
         }
 
         // POST: MovementAccountReceivable/Edit/5
         [HttpPost]
-        public async Task<ActionResult> Edit(int id, FormCollection collection)
+        public async Task<ActionResult> Edit(int id, MovementAccountReceivable collection)
         {
             try
             {
@@ -165,14 +194,41 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         }
 
         // GET: MovementAccountReceivable/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            movAccRec = new MovementAccountReceivable();
+            responseClient = new Response();
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathDetails, id));
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        movAccRec = JsonConvert.DeserializeObject<MovementAccountReceivable>(responseClient.Value.ToString());
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = "Error al intentar contactar con eservidor de datos.";
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
+            }
+            return View(movAccRec);
         }
 
         // POST: MovementAccountReceivable/Delete/5
         [HttpPost]
-        public async Task<ActionResult> Delete(int id, FormCollection collection)
+        public async Task<ActionResult> Delete(int id, MovementAccountReceivable collection)
         {
             try
             {

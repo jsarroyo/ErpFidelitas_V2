@@ -1,4 +1,4 @@
-﻿
+﻿@model Asp.ErpFidelitas.General.v2.Entities.User
 @{
     Layout = "~/Views/Shared/_LayoutSecurity.cshtml";
 }
@@ -21,16 +21,20 @@
                                 <h1 class="h4 text-gray-900 mb-4">Universidad Fidélias</h1>
                                 <h2 class="h4 text-gray-900 mb-4">Proyecto Final</h2>
                             </div>
-                            <form class="user needs-validation">
+                            @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { @class = "user", id="formLogin" }))
+                            {
+                                if (ViewBag.ErrorMessage != null)
+                                {
+                                    <h2>@ViewBag.ErrorMessage</h2>
+                                }
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-user"
-                                            id="txtEmail" aria-describedby="emailHelp"
-                                            placeholder="Dirección de correo...">
-                                    <p id="txtEmailValidationText" class="text-danger text-xs" ></p>
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control form-control-user", id = "txtEmail", placeholder = "Dirección de correo...", type = "email" })
+
+                                    <p id="txtEmailValidationText" class="text-danger text-xs"></p>
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control form-control-user"
-                                            id="txtPassword" placeholder="Contraseña">
+                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control form-control-user", id = "txtPassword", placeholder = "Contraseña" })
+
                                     <p id="txtPasswordValidationText" class="text-danger text-xs"></p>
                                 </div>
                                 <div class="form-group">
@@ -39,17 +43,11 @@
                                         <label class="custom-control-label" for="customCheck">Recuerdame</label>
                                     </div>
                                 </div>
-                                <a id="lnkLogin" class="btn btn-primary btn-user btn-block">
-                                    Login
-                                </a>
-                                <hr>
-                                <!-- <a href="index.html" class="btn btn-google btn-user btn-block">
-                                    <i class="fab fa-google fa-fw"></i> Login with Google
-                                </a>
-                                <a href="index.html" class="btn btn-facebook btn-user btn-block" >
-                                    <i class="fab fa-facebook-f fa-fw disabled readonly"  ></i> Login with Facebook
-                                </a> -->
-                            </form>
+                                <input id="lnkLogin" class="btn btn-primary btn-user btn-block" type="submit" value="Login"/>
+                            }
+                            <hr>
+
+
                             <hr>
                             <div class="text-center">
                                 @Html.ActionLink("Olvido su contraseña?", "ForgotPassword", "Login")
