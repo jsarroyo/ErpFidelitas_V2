@@ -82,13 +82,12 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				try
 				{
 					var tieneRegistrosEnInventerio = (from u in dBEntities.MovementsInventory
-													  where u.CompanyId == CompanyId
+													  where u.ProductId == (int)id
+													  && u.CompanyId == CompanyId
 													  select u).Any();
-
 					if (tieneRegistrosEnInventerio)
 					{
 						return request.DoWarning($"No se permite borrar registros por que tiene relaciones en otros modulos.");
-
 					}
 					
 					var Entidades = (from u in dBEntities.Products
