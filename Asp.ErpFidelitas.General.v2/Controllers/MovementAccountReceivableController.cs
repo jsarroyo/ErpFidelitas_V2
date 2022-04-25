@@ -107,6 +107,8 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
             ViewBag.ListaTiposDocumento = await ObtenerComboTiposDocumento();
             ViewBag.ListaMonedas = await ObtenerComboMonedas();
             ViewBag.ListaPersonas = await ObtenerComboPersonasAsync();
+            //TempData["MensajesExito"] = EstadoOperacion ? "Operacion realizada exitosamente!" : "";
+
             return View();
         }
 
@@ -260,7 +262,8 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                         string resultContent = response.Content.ReadAsStringAsync().Result;
                     }
                 }
-                return View();
+                return RedirectToAction("Create");
+                //return View();
             }
             catch (Exception error)
             {

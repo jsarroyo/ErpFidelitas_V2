@@ -99,6 +99,8 @@
       <DependentUpon>ModeloERP.edmx</DependentUpon>
       <LastGenOutput>ModeloERP.cs</LastGenOutput>
     </Content>
+    <Content Include="Data\CreacionBaseDatos.sql" />
+    <Content Include="Data\ValoresPorDefecto.sql" />
     <Content Include="Data\Views.sql" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
