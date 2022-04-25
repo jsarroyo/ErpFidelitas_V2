@@ -165,6 +165,20 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				dBEntities.Configuration.LazyLoadingEnabled = false;
 				try
 				{
+					var tieneRegistrosEnCuentasPorCobrar = (from u in dBEntities.MovementsAccountsReceivable
+															where u.PersonId == PersonId
+															select u).Any();
+                    if (tieneRegistrosEnCuentasPorCobrar)
+                    {
+						return request.DoWarning($"No se permite borrar registros por que tiene relaciones en otros modulos.");
+					}
+					var tieneRegistrosEnCuentasPorPagar = (from u in dBEntities.MovementsDebtsToPay
+															where u.PersonId == PersonId
+															select u).Any();
+					if (tieneRegistrosEnCuentasPorPagar)
+					{
+						return request.DoWarning($"No se permite borrar registros por que tiene relaciones en otros modulos.");
+					}
 					var Entidades = (from u in dBEntities.Persons
 									 where u.PersonId == PersonId
 									 select u).FirstOrDefault();
