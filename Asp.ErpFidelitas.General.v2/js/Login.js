@@ -206,6 +206,15 @@ var LoginJS = function(){
         fila = fila + '<td>' + $("#ddlMoneda").val() + '</td>';
         fila = fila + '</tr>';
 
+
+        fila = '<tr class="odd">';
+        fila = fila + '<td class="sorting_1"> <input type="text" class="form-control-plaintext" name="PersonaId" value="' + $("#ddlPersona").val() + '"></td>';
+        fila = fila + '<td > <input class="form-control-plaintext" type="text" name="TipoDocumentId" value="' + $("#ddlTipoDocumento").val() + '"></td>';
+        fila = fila + '<td > <input class="form-control-plaintext" type="text" name="Monto" value="' + $("#txtMonto").val() + '"></td>';
+        fila = fila + '<td > <input class="form-control-plaintext" type="text" name="Moneda" value="' + $("#ddlMoneda").val() + '"></td>';
+        fila = fila + '</tr>';
+
+
         //$("#dataTable_wrapper > tbody").append(fila);
         $('#dataTable').append(fila);
     }

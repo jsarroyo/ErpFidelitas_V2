@@ -225,7 +225,6 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         {
             try
             {
-                var sss = HttpContext.Request["DocumentTypeId"];
                 responseClient = new Response();
                 movementInventory = new MovementInventory();
                 for (int i=0;i< DocumentTypeId.Length;i++)

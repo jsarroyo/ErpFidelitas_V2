@@ -225,25 +225,42 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
 
         // POST: MovementAccountReceivable/Create
         [HttpPost]
-        public async Task<ActionResult> Create(MovementAccountReceivable collection)
+        public async Task<ActionResult> Create(MovementDebtToPay collection, long[] PersonaId, short[] TipoDocumentId, decimal[] Monto, short[] Moneda)
         {
+
+            //fila = '<tr class="odd">';
+            //fila = fila + '<td class="sorting_1"> <input type="text" class="form-control-plaintext" name="PersonaId" value="' + $("#ddlPersona").val() + '"></td>';
+            //fila = fila + '<td > <input class="form-control-plaintext" type="text" name="TipoDocumentId" value="' + $("#ddlTipoDocumento").val() + '"></td>';
+            //fila = fila + '<td > <input class="form-control-plaintext" type="text" name="Monto" value="' + $("#txtMonto").val() + '"></td>';
+            //fila = fila + '<td > <input class="form-control-plaintext" type="text" name="Moneda" value="' + $("#ddlMoneda").val() + '"></td>';
+            //fila = fila + '</tr>';
+
             try
             {
-                movAccRec = new MovementAccountReceivable();
                 responseClient = new Response();
-
-                using (var client = new HttpClient())
+                movAccRec = new MovementAccountReceivable();
+                for (int i = 0; i < PersonaId.Length; i++)
                 {
-                    var json = JsonConvert.SerializeObject(collection);
-                    var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+                    movAccRec = new MovementAccountReceivable()
+                    {
+                        CompanyId = 1,
+                        DocumentTypeId = TipoDocumentId[i],
+                        PersonId = PersonaId[i],
+                        CurrencyId = Moneda[i],
+                        Amount = Monto[i]
+                    };
 
-                    HttpResponseMessage response = await client.PostAsync(UrlActionPathInsertOne, stringContent);
+                    using (var client = new HttpClient())
+                    {
+                        var json = JsonConvert.SerializeObject(movAccRec);
+                        var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    string resultContent = response.Content.ReadAsStringAsync().Result;
+                        HttpResponseMessage response = await client.PostAsync(UrlActionPathInsertOne, stringContent);
 
+                        string resultContent = response.Content.ReadAsStringAsync().Result;
+                    }
                 }
-
-                return RedirectToAction("Index");
+                return View();
             }
             catch (Exception error)
             {
