@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_LayoutSecurity.cshtml";
 }
 
-
+@*@Html.Hidden("txtMensajes",ViewBag)*@
 <div class="row justify-content-center">
 
     <div class="col-xl-10 col-lg-12 col-md-9">
@@ -21,11 +21,11 @@
                                 <h1 class="h4 text-gray-900 mb-4">Universidad Fidélias</h1>
                                 <h2 class="h4 text-gray-900 mb-4">Proyecto Final</h2>
                             </div>
-                            @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { @class = "user", id="formLogin" }))
+                            @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { @class = "user", id = "formLogin" }))
                             {
                                 if (ViewBag.ErrorMessage != null)
-                                {
-                                    <h2>@ViewBag.ErrorMessage</h2>
+                                { 
+                                    <p id="txtServerMessageText" class="text-danger text-md-center">@ViewBag.ErrorMessage</p>
                                 }
                                 <div class="form-group">
                                     @Html.TextBoxFor(model => model.Email, new { @class = "form-control form-control-user", id = "txtEmail", placeholder = "Dirección de correo...", type = "email" })
@@ -43,7 +43,7 @@
                                         <label class="custom-control-label" for="customCheck">Recuerdame</label>
                                     </div>
                                 </div>
-                                <input id="lnkLogin" class="btn btn-primary btn-user btn-block" type="submit" value="Login"/>
+                                <input id="lnkLogin" class="btn btn-primary btn-user btn-block" type="submit" value="Login" />
                             }
                             <hr>
 

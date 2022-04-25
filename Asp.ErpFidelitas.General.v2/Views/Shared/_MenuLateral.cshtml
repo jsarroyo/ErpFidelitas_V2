@@ -29,7 +29,7 @@
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    @if (Session["RolId"].ToString() == "1")
+    @if (Session["RolId"]?.ToString() == "1")
     {
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdm"
@@ -83,7 +83,7 @@
         </div>
     </li>
     <!-- Nav Item - Utilities Collapse Menu -->
-    @if (Session["RolId"].ToString() == "1")
+    @if (Session["RolId"]?.ToString() == "1")
     {
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSEC"
@@ -122,23 +122,21 @@
         </div>
     </li>
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseContabilidad"
-           aria-expanded="true" aria-controls="collapseContabilidad">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInventario"
+           aria-expanded="true" aria-controls="collapseInventario">
             <i class="fas fa-fw fa-wrench"></i>
             <span>Inventario</span>
         </a>
-        <div id="collapseContabilidad" class="collapse" aria-labelledby="headingContabilidad"
+        <div id="collapseInventario" class="collapse" aria-labelledby="headingInventario"
              data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Inventario:</h6>
+                <h6 class="collapse-header">Inventario:</h6> 
 
+                <a class="collapse-item" href="~/Products">Productos</a>
+                <a class="collapse-item" href="~/MovementInventory">Movimientos</a>
+                <a class="collapse-item" href="~/MovementInventory/ReporteSaldos">Reporte Saldos</a>
+                <a class="collapse-item" href="~/MovementInventory/ReporteCostos">Reporte Costos</a>
                 <a class="collapse-item" href="~/Parameter">Parámetros</a>
-
-                <a class="collapse-item" href="~/Views/Products">Productos</a>
-                <a class="collapse-item" href="~/Views/MovementInventory">Movimientos</a>
-                <a class="collapse-item" href="~/Views/MovementInventory/ReporteSaldos">Reporte Saldos</a>
-                <a class="collapse-item" href="~/Views/MovementInventory/ReporteCostos">Reporte Costos</a>
-                <a class="collapse-item" href="~/Views/Parameter">Parámetros</a>
             </div>
         </div>
     </li>

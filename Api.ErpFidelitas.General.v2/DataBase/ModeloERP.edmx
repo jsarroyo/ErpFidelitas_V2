@@ -143,6 +143,30 @@ warning 6002: The table/view 'ProyectoERP.dbo.TipoCambio' does not have a primar
           <Property Name="Email" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="255" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ProyectoERP.dbo.Inv_ReporteSaldos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Inv_ReporteSaldos">
+          <Key>
+            <PropertyRef Name="Codigo" />
+            <PropertyRef Name="Compania" />
+          </Key>
+          <Property Name="Codigo" Type="bigint" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" />
+          <Property Name="Saldo" Type="decimal" Precision="38" Scale="4" />
+          <Property Name="Compania" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="date" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ProyectoERP.dbo.Inv_ReporteSaldosCostos' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Inv_ReporteSaldosCostos">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="bigint" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" />
+          <Property Name="SaldoCosto" Type="decimal" Precision="38" Scale="6" />
+          <Property Name="Fecha" Type="date" />
+        </EntityType>
         <Association Name="FK_CompanyMovementsAccountsReceivable">
           <End Role="Companies" Type="Self.Companies" Multiplicity="1" />
           <End Role="MovementsAccountsReceivable" Type="Self.MovementsAccountsReceivable" Multiplicity="*" />
@@ -385,6 +409,23 @@ warning 6002: The table/view 'ProyectoERP.dbo.TipoCambio' does not have a primar
     [TipoCambio].[Des_Fecha] AS [Des_Fecha], 
     [TipoCambio].[Num_Valor] AS [Num_Valor]
     FROM [dbo].[TipoCambio] AS [TipoCambio]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Inv_ReporteSaldos" EntityType="Self.Inv_ReporteSaldos" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Inv_ReporteSaldos].[Codigo] AS [Codigo], 
+    [Inv_ReporteSaldos].[Nombre] AS [Nombre], 
+    [Inv_ReporteSaldos].[Saldo] AS [Saldo], 
+    [Inv_ReporteSaldos].[Compania] AS [Compania], 
+    [Inv_ReporteSaldos].[Fecha] AS [Fecha]
+    FROM [dbo].[Inv_ReporteSaldos] AS [Inv_ReporteSaldos]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Inv_ReporteSaldosCostos" EntityType="Self.Inv_ReporteSaldosCostos" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Inv_ReporteSaldosCostos].[Codigo] AS [Codigo], 
+    [Inv_ReporteSaldosCostos].[Nombre] AS [Nombre], 
+    [Inv_ReporteSaldosCostos].[SaldoCosto] AS [SaldoCosto], 
+    [Inv_ReporteSaldosCostos].[Fecha] AS [Fecha]
+    FROM [dbo].[Inv_ReporteSaldosCostos] AS [Inv_ReporteSaldosCostos]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_CompanyMovementsAccountsReceivable" Association="Self.FK_CompanyMovementsAccountsReceivable">
             <End Role="Companies" EntitySet="Companies" />
@@ -943,7 +984,29 @@ warning 6002: The table/view 'ProyectoERP.dbo.TipoCambio' does not have a primar
             <End Role="RolUsers" EntitySet="RolUsers" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="Inv_ReporteSaldos" EntityType="ErpDBModel.Inv_ReporteSaldos" />
+          <EntitySet Name="Inv_ReporteSaldosCostos" EntityType="ErpDBModel.Inv_ReporteSaldosCostos" />
         </EntityContainer>
+        <EntityType Name="Inv_ReporteSaldos">
+          <Key>
+            <PropertyRef Name="Codigo" />
+            <PropertyRef Name="Compania" />
+          </Key>
+          <Property Name="Codigo" Type="Int64" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Saldo" Type="Decimal" Precision="38" Scale="4" />
+          <Property Name="Compania" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="Inv_ReporteSaldosCostos">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="Int64" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SaldoCosto" Type="Decimal" Precision="38" Scale="6" />
+          <Property Name="Fecha" Type="DateTime" Precision="0" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1093,6 +1156,27 @@ warning 6002: The table/view 'ProyectoERP.dbo.TipoCambio' does not have a primar
                 <ScalarProperty Name="Cod_IndicadorInterno" ColumnName="Cod_IndicadorInterno" />
                 <ScalarProperty Name="Des_Fecha" ColumnName="Des_Fecha" />
                 <ScalarProperty Name="Num_Valor" ColumnName="Num_Valor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inv_ReporteSaldos">
+            <EntityTypeMapping TypeName="ErpDBModel.Inv_ReporteSaldos">
+              <MappingFragment StoreEntitySet="Inv_ReporteSaldos">
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Compania" ColumnName="Compania" />
+                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inv_ReporteSaldosCostos">
+            <EntityTypeMapping TypeName="ErpDBModel.Inv_ReporteSaldosCostos">
+              <MappingFragment StoreEntitySet="Inv_ReporteSaldosCostos">
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="SaldoCosto" ColumnName="SaldoCosto" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

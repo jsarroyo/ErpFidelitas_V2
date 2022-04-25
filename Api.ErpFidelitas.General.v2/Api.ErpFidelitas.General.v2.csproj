@@ -99,6 +99,7 @@
       <DependentUpon>ModeloERP.edmx</DependentUpon>
       <LastGenOutput>ModeloERP.cs</LastGenOutput>
     </Content>
+    <Content Include="Data\Views.sql" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -137,6 +138,12 @@
       <DependentUpon>ModeloERP.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\DocumentTypes.cs">
+      <DependentUpon>ModeloERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\Inv_ReporteSaldos.cs">
+      <DependentUpon>ModeloERP.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataBase\Inv_ReporteSaldosCostos.cs">
       <DependentUpon>ModeloERP.tt</DependentUpon>
     </Compile>
     <Compile Include="DataBase\ModeloERP.Context.cs">
@@ -210,7 +217,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

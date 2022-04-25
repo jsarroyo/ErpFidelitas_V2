@@ -18,6 +18,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         // GET: Login
         public ActionResult Index()
         {
+
             return View(new User());
         }
         [HttpPost]
@@ -57,10 +58,11 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
             catch (Exception error)
             {
                 ViewBag.ErrorInfo = ERRORMESSAGE;
-                ViewBag.ErrorMessage = error.Message;
+                ViewBag.ErrorMessage = "No se ha podido contactar el servidor de apis. " + error.Message;
                 ViewBag.InnerException = error.InnerException;
                 ViewBag.StackTrace = error.StackTrace;
-                return View("Error");
+                //return RedirectToAction("Index", "Login");
+                return View(new User());
             }
         }
         public ActionResult ForgotPassword()

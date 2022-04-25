@@ -38,5 +38,7 @@ namespace Api.ErpFidelitas.General.v2.DataBase
         public virtual DbSet<RolUsers> RolUsers { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<TipoCambio> TipoCambio { get; set; }
+        public virtual DbSet<Inv_ReporteSaldos> Inv_ReporteSaldos { get; set; }
+        public virtual DbSet<Inv_ReporteSaldosCostos> Inv_ReporteSaldosCostos { get; set; }
     }
 }

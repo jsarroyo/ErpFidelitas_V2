@@ -36,6 +36,8 @@
         <AssociationConnector Association="ErpDBModel.FK_Products" ManuallyRouted="false" />
         <AssociationConnector Association="ErpDBModel.FK_PersonTypeId" ManuallyRouted="false" />
         <AssociationConnector Association="ErpDBModel.FK_RolUsers" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ErpDBModel.Inv_ReporteSaldos" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="ErpDBModel.Inv_ReporteSaldosCostos" Width="1.5" PointX="6.75" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
