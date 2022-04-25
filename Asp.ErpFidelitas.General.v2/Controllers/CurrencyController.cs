@@ -83,7 +83,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
             }
             catch (Exception error)
             {
-                ViewBag.ErrorInfo = "Error al intentar contactar con eservidor de datos.";
+                ViewBag.ErrorInfo = ERRORMESSAGE;
                 ViewBag.ErrorMessage = error.Message;
                 ViewBag.InnerException = error.InnerException;
                 ViewBag.StackTrace = error.StackTrace;
@@ -155,7 +155,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
             }
             catch (Exception error)
             {
-                ViewBag.ErrorInfo = "Error al intentar contactar con eservidor de datos.";
+                ViewBag.ErrorInfo = ERRORMESSAGE;
                 ViewBag.ErrorMessage = error.Message;
                 ViewBag.InnerException = error.InnerException;
                 ViewBag.StackTrace = error.StackTrace;
@@ -220,7 +220,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
             }
             catch (Exception error)
             {
-                ViewBag.ErrorInfo = "Error al intentar contactar con eservidor de datos.";
+                ViewBag.ErrorInfo = ERRORMESSAGE;
                 ViewBag.ErrorMessage = error.Message;
                 ViewBag.InnerException = error.InnerException;
                 ViewBag.StackTrace = error.StackTrace;

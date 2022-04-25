@@ -68,7 +68,7 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 					return request.DoError(ex.Message);
 				}
 			}
-		}
+		} 
 		public Request Delete(int CompanyId, object id=null)
 		{
 
@@ -79,6 +79,48 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				dBEntities.Configuration.LazyLoadingEnabled = false;
 				try
 				{
+					var tieneRegistrosEnCuentasCobrar = (from u in dBEntities.MovementsAccountsReceivable
+									 where u.CompanyId == CompanyId
+									 select u).Any();
+
+					if (tieneRegistrosEnCuentasCobrar)
+					{
+						return request.DoWarning($"No se permite borrar registros por que tiene relaciones en otros modulos.");
+
+					}
+
+
+					var tieneRegistrosEnInventerio = (from u in dBEntities.MovementsInventory
+													  where u.CompanyId == CompanyId
+													  select u).Any();
+
+					if (tieneRegistrosEnInventerio)
+					{
+						return request.DoWarning($"No se permite borrar registros por que tiene relaciones en otros modulos.");
+
+					}
+					var tieneRegistrosEnCuentasPagar = (from u in dBEntities.MovementsDebtsToPay
+													  where u.CompanyId == CompanyId
+													  select u).Any();
+
+					if (tieneRegistrosEnCuentasPagar)
+					{
+						return request.DoWarning($"No se permite borrar registros por que tiene relaciones en otros modulos.");
+
+					}
+
+					var tieneParameters = (from u in dBEntities.Parameters
+														where u.CompanyId == CompanyId
+														select u).Any();
+
+					if (tieneParameters)
+					{
+						return request.DoWarning($"No se permite borrar registros por que tiene relaciones en otros modulos.");
+
+					}
+
+					
+
 					var Entidades = (from u in dBEntities.Companies
 									 where u.CompanyId == CompanyId
 									 select u).FirstOrDefault();

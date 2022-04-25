@@ -48,12 +48,12 @@
             </div>
         </li>
     }
-
+     
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCXP"
            aria-expanded="true" aria-controls="collapseCXP">
             <i class="fas fa-fw fa-cog"></i>
-            <span>Cuentas por pagar</span>
+            <span>Cuentas por Pagar</span>
         </a>
         <div id="collapseCXP" class="collapse" aria-labelledby="headingCXP" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
@@ -61,10 +61,10 @@
                 <a class="collapse-item" href="~/MovementDebtToPay">Movimientos de Cuentas por Pagar</a>
                 <a class="collapse-item" href="~/Person">Proveedores</a>
                 <a class="collapse-item" href="~/Parameter">Parámetros</a>
+                <a class="collapse-item" href="~/Views/MovementDebtToPay/ReporteMov">Movimientos por proveedor</a>
             </div>
         </div>
     </li>
-
 
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCXC"
@@ -78,12 +78,13 @@
                 <a class="collapse-item" href="~/MovementAccountReceivable">Movimientos de Cuentas por cobrar</a>
                 <a class="collapse-item" href="~/Person">Clientes</a>
                 <a class="collapse-item" href="~/Parameter">Parámetros</a>
+                <a class="collapse-item" href="~/Views/MovementAccountReceivable/ReporteMov">Movimientos por cliente</a>
             </div>
         </div>
     </li>
     <!-- Nav Item - Utilities Collapse Menu -->
     @if (Session["RolId"].ToString() == "1")
-     {
+    {
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSEC"
                aria-expanded="true" aria-controls="collapseSEC">
@@ -101,9 +102,8 @@
             </div>
         </li>
 
-     }
-
-
+    }
+     
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseContabilidad"
            aria-expanded="true" aria-controls="collapseContabilidad">
@@ -118,6 +118,27 @@
                 <a class="collapse-item" href="utilities-border.html">Asientos de Diario</a>
                 <a class="collapse-item" href="utilities-border.html">Asientos de Mayor</a>
                 <a class="collapse-item" href="Currency/Index">Parámetros</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseContabilidad"
+           aria-expanded="true" aria-controls="collapseContabilidad">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Inventario</span>
+        </a>
+        <div id="collapseContabilidad" class="collapse" aria-labelledby="headingContabilidad"
+             data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Inventario:</h6>
+
+                <a class="collapse-item" href="~/Parameter">Parámetros</a>
+
+                <a class="collapse-item" href="~/Views/Products">Productos</a>
+                <a class="collapse-item" href="~/Views/MovementInventory">Movimientos</a>
+                <a class="collapse-item" href="~/Views/MovementInventory/ReporteSaldos">Reporte Saldos</a>
+                <a class="collapse-item" href="~/Views/MovementInventory/ReporteCostos">Reporte Costos</a>
+                <a class="collapse-item" href="~/Views/Parameter">Parámetros</a>
             </div>
         </div>
     </li>

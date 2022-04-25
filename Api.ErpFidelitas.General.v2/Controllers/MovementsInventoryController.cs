@@ -1,6 +1,7 @@
 ﻿using Api.ErpFidelitas.General.v2.BusinessLogic;
 using Api.ErpFidelitas.General.v2.DataBase;
 using Api.ErpFidelitas.General.v2.Utilities;
+using System;
 using System.Web.Http;
 
 namespace Api.ErpFidelitas.General.v2.Controllers
@@ -49,6 +50,22 @@ namespace Api.ErpFidelitas.General.v2.Controllers
 			myPersons = new MovementsInventoryBL();
 
 			return myPersons.UpdateById(insertar);
+		} 
+		[HttpGet]
+		[Route("General/MovementsInventory/ReporteCostos")]
+		public Request ReporteCostos(int CompanyId, DateTime desde, DateTime hasta, int id=0)
+		{
+			myPersons = new MovementsInventoryBL();
+
+			return myPersons.ReporteCostos(CompanyId,desde, hasta, id);
+		}
+		[HttpGet]
+		[Route("General/MovementsInventory/ReporteSaldos")]
+		public Request ReporteSaldos(int CompanyId,DateTime desde, DateTime hasta, int id = 0)
+		{
+			myPersons = new MovementsInventoryBL();
+
+			return myPersons.ReporteSaldos(CompanyId,desde, hasta, id);
 		}
 	}
 }

@@ -161,6 +161,11 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				dBEntities.Configuration.LazyLoadingEnabled = false;
 				try
 				{
+
+					//var Entidades = (from u in dBEntities.Currencys
+					//				 where u.CurrencyId == CurrencyId
+					//				 select u).Any();
+
 					var Entidades = (from u in dBEntities.Currencys
 									 where u.CurrencyId == CurrencyId
 									 select u).FirstOrDefault();

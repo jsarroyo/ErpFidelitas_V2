@@ -64,7 +64,36 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
             }
         }
 
-        public Request GetByCondition()
+        public Request ReporteSaldos(int CompanyId,DateTime desde, DateTime hasta, int id)
+		{
+            Request request = new Request();
+            using (var dBEntities = new ErpDBEntities())
+            {
+                dBEntities.Configuration.ProxyCreationEnabled = false;
+                dBEntities.Configuration.LazyLoadingEnabled = false;
+                try
+                {
+                     
+                    var Entidades = dBEntities.Companies.Find("");
+                    if (Entidades == null)
+                    {
+                        return request.DoWarning($"No se obtuvieron resultados en la búsqueda");
+                    }
+                    return request.DoSuccess(Entidades, $"Se encontraron {Entidades.Count} resultados");
+                }
+                catch (Exception ex)
+                {
+                    return request.DoError(ex.Message);
+                }
+            }
+        }
+
+        public Request ReporteCostos(int CompanyId,DateTime desde, DateTime hasta, int id)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Request GetByCondition()
         {
             Request request = new Request();
             using (var dBEntities = new ErpDBEntities())
