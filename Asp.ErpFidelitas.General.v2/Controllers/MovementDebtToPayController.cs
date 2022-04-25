@@ -105,6 +105,9 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
             ViewBag.ListaTiposDocumento = await ObtenerComboTiposDocumento();
             ViewBag.ListaMonedas = await ObtenerComboMonedas();
             ViewBag.ListaPersonas = await ObtenerComboPersonasAsync();
+
+            //TempData["MensajesExito"] = EstadoOperacion? "Operacion realizada exitosamente!":"";
+
             return View();
         }
 
@@ -230,8 +233,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
             //fila = fila + '<td > <input class="form-control-plaintext" type="text" name="TipoDocumentId" value="' + $("#ddlTipoDocumento").val() + '"></td>';
             //fila = fila + '<td > <input class="form-control-plaintext" type="text" name="Monto" value="' + $("#txtMonto").val() + '"></td>';
             //fila = fila + '<td > <input class="form-control-plaintext" type="text" name="Moneda" value="' + $("#ddlMoneda").val() + '"></td>';
-            //fila = fila + '</tr>';
-            
+            //fila = fila + '</tr>';            
             try
             {  
                 responseClient = new Response();
@@ -257,7 +259,9 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                         string resultContent = response.Content.ReadAsStringAsync().Result;
                     }
                 }
-                return View();
+
+                return RedirectToAction("Create");
+                //return View();
             }
             catch (Exception error)
             {

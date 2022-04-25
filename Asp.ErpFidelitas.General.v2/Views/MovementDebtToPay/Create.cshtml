@@ -7,6 +7,7 @@
 
 <h2>Create</h2>
 
+@Html.Hidden("txtMessage", TempData["MensajesExito"] , htmlAttributes: new { id = "txtMessage" })
 
 <!-- Account details card-->
 <div class="card mb-12">
@@ -88,7 +89,7 @@
     </div>
 </div>
 
-@using (Html.BeginForm("Create", "MovementInventory", FormMethod.Post))
+@using (Html.BeginForm("Create", "MovementDebtToPay", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -123,10 +124,10 @@
                                 </thead>
                                 <tfoot>
                                     @*<tr>
-                                    <th rowspan="1" colspan="1">Proveedor</th>
-                                    <th rowspan="1" colspan="1">Tipo Documento</th>
-                                    <th rowspan="1" colspan="1">Monto</th>
-                                    <th rowspan="1" colspan="1">Moneda</th> *@
+                                        <th rowspan="1" colspan="1">Proveedor</th>
+                                        <th rowspan="1" colspan="1">Tipo Documento</th>
+                                        <th rowspan="1" colspan="1">Monto</th>
+                                        <th rowspan="1" colspan="1">Moneda</th> *@
                                 </tfoot>
                                 <tbody>
                                 </tbody>
@@ -138,6 +139,7 @@
         </div>
     </div>
 }
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+ 
