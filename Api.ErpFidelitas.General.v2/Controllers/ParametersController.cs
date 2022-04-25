@@ -11,11 +11,11 @@ namespace Api.ErpFidelitas.General.v2.Controllers
 		//[FiltroSeguridad]
 		[HttpGet]
 		[Route("General/Parameters/ObtenerUno")]
-		public Request ObtenerUno(int id)
+		public Request ObtenerUno(int CompanyId,int id)
 		{
 			myPersons = new ParametersBL();
 
-			return myPersons.GetById(0, id);
+			return myPersons.GetById(CompanyId, id);
 		}
 		[HttpGet]
 		[Route("General/Parameters/ObtenerTodas")]
@@ -36,11 +36,11 @@ namespace Api.ErpFidelitas.General.v2.Controllers
 		}
 		[HttpDelete]
 		[Route("General/Parameters/BorrarUno")]
-		public Request BorrarUno(int id)
+		public Request BorrarUno(int CompanyId,  int id)
 		{
 			myPersons = new ParametersBL();
 
-			return myPersons.Delete(0, id);
+			return myPersons.Delete(CompanyId, id);
 		}
 		[HttpPut]
 		[Route("General/Parameters/ActualizarUno")]

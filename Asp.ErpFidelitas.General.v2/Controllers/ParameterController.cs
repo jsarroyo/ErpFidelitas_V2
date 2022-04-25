@@ -17,11 +17,11 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         Parameter parameter;
         List<Parameter> parameters;
         Response responseClient;
-        const string UrlActionPathDetails = "https://localhost:44331/General/Parameters/ObtenerUno?id={0}";
+        const string UrlActionPathDetails = "https://localhost:44331/General/Parameters/ObtenerUno?id={0}&CompanyId={1}";
         const string UrlActionPathList = "https://localhost:44331/General/Parameters/ObtenerTodas";
         const string UrlActionPathInsertOne = "https://localhost:44331/General/Parameters/CrearUno";
         const string UrlActionPathUpdate = "https://localhost:44331/General/Parameters/ActualizarUno";
-        const string UrlActionPathDelete = "https://localhost:44331/General/Parameters/BorrarUno?id={0}";
+        const string UrlActionPathDelete = "https://localhost:44331/General/Parameters/BorrarUno?id={0}&CompanyId={1}";
 
         // GET: Parameter
         public async Task<ActionResult> Index()
@@ -57,7 +57,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         }
 
         // GET: Parameter/Details/5
-        public async Task<ActionResult> Details(int id)
+        public async Task<ActionResult> Details(int CompanyId,int id)
         {
             parameter = new Parameter();
             responseClient = new Response();
@@ -66,7 +66,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
             {
                 using (var client = new HttpClient())
                 {
-                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathDetails, id));
+                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathDetails, id, CompanyId));
                     if (response.IsSuccessStatusCode)
                     {
                         var str = await response.Content.ReadAsStringAsync();
@@ -86,7 +86,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                 ViewBag.StackTrace = error.StackTrace;
                 return View("Error");
             }
-            return View(parameters);
+            return View(parameter);
 
         }
 
@@ -98,7 +98,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
 
         // POST: Parameter/Create
         [HttpPost]
-        public async Task<ActionResult> Create(FormCollection collection)
+        public async Task<ActionResult> Create(Parameter collection)
         {
             try
             {
@@ -128,14 +128,41 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         }
 
         // GET: Parameter/Edit/5
-        public ActionResult Edit(int id)
+        public  async Task<ActionResult> Edit(int CompanyId,int id)
         {
-            return View();
+            parameter = new Parameter();
+            responseClient = new Response();
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathDetails, id, CompanyId));
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        parameter = JsonConvert.DeserializeObject<Parameter>(responseClient.Value.ToString());
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
+            }
+            return View(parameter);
         }
 
         // POST: Parameter/Edit/5
         [HttpPost]
-        public async Task<ActionResult> Edit(int id, FormCollection collection)
+        public async Task<ActionResult> Edit(int id, Parameter collection)
         {
             try
             {
@@ -165,14 +192,41 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         }
 
         // GET: Parameter/Delete/5
-        public ActionResult Delete(int id)
+        public async Task< ActionResult> Delete(int CompanyId,int id)
         {
-            return View();
+            parameter = new Parameter();
+            responseClient = new Response();
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathDetails, id, CompanyId));
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        parameter = JsonConvert.DeserializeObject<Parameter>(responseClient.Value.ToString());
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                return View("Error");
+            }
+            return View(parameter);
         }
 
         // POST: Parameter/Delete/5
         [HttpPost]
-        public async Task<ActionResult> Delete(int id, FormCollection collection)
+        public async Task<ActionResult> Delete(int id, Parameter collection)
         {
             try
             {
