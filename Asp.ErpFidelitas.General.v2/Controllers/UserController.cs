@@ -60,6 +60,13 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         // GET: Users/Details/5
         public async Task<ActionResult> Details(int id)
         {
+            if(Session["RolId"].ToString() != "1")
+            {
+                if (Session["UserId"].ToString() != $"{id}")
+                {
+                    return View("Forbidden");
+                }
+            }
             user = new User();
             responseClient = new Response();
 
