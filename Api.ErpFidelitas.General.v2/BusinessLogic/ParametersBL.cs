@@ -48,7 +48,6 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
                 try
                 {
                     var Entidades = (from u in dBEntities.Parameters
-                                     where u.CompanyId == CompanyId
                                      select u).ToList();
                     if (Entidades == null)
                     {

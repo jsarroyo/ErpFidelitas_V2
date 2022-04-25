@@ -121,7 +121,6 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				try
 				{
 					var Entidades = (from u in dBEntities.Products
-
 									 select u).ToList();
 					if (Entidades == null)
 					{
