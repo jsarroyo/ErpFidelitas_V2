@@ -25,6 +25,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         const string UrlActionPathDelete = "https://localhost:44331/General/Users/BorrarUno?id={0}";
 
         // GET: Users
+        [AdminFiltro]
         public async Task<ActionResult> Index()
         {
             usuarios = new List<User>();
@@ -138,6 +139,13 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         // GET: Users/Edit/5
         public async Task< ActionResult> Edit(int id)
         {
+            if (Session["RolId"].ToString() != "1")
+            {
+                if (Session["UserId"].ToString() != $"{id}")
+                {
+                    return View("Forbidden");
+                }
+            }
             user = new User();
             responseClient = new Response();
 
@@ -200,6 +208,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         }
 
         // GET: Users/Delete/5
+        [AdminFiltro]
         public async Task< ActionResult> Delete(int id)
         {
             user = new User();
@@ -233,6 +242,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         }
 
         // POST: Users/Delete/5
+        [AdminFiltro]
         [HttpPost]
         public async Task<ActionResult> Delete(int id, User collection)
         {
@@ -245,7 +255,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                     var json = JsonConvert.SerializeObject(collection);
                     var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    HttpResponseMessage response = await client.DeleteAsync(string.Format(UrlActionPathDetails, id));
+                    HttpResponseMessage response = await client.DeleteAsync(string.Format(UrlActionPathDelete, id));
 
                     string resultContent = response.Content.ReadAsStringAsync().Result;
 
