@@ -153,29 +153,28 @@ var LoginJS = function(){
         return (mystr == undefined);
     }
     this.AddMovimientoInv = function () {
-        if ($("#ddlTipoDocumento").val() == "") {
+        if ($("#ddlTipoDocumento").val() == "" || $("#ddlTipoDocumento").val() == null) {
             alertify.alert("Seleccione un tipo de documento");
             return;
         }
-        if ($("#ddlArticulo").val() == "") {
+        if ($("#ddlArticulo").val() == "" || $("#ddlArticulo").val() == null) {
             alertify.alert("Seleccione un artículo");
             return;
         }
-        if ($("#txtCantidad").val() == "0") {
+        if ($("#txtCantidad").val() == "0" || $("#txtCantidad").val() == null) {
             alertify.alert("Cantidad no puede ser cero o vacío");
             return;
         }
-        if ($("#ddlMoneda").val() == "") {
+        if ($("#ddlMoneda").val() == "" || $("#ddlMoneda").val() == null) {
             alertify.alert("Seleccione una moneda");
             return;
-        }
-
+        } 
         fila = '<tr class="odd">';
-        fila = fila + '<td class="sorting_1">' + $("#ddlTipoDocumento").val() + '</td>';
-        fila = fila + '<td>' + $("#ddlPersona").val() + '</td>';
-        fila = fila + '<td>' + $("#txtCantidad").val() + '</td>';
-        fila = fila + '<td>' + $("#txtPrecio").val() + '</td>';
-        fila = fila + '<td>' + $("#ddlMoneda").val() + '</td>';
+        fila = fila + '<td class="sorting_1"> <input type="text" class="form-control-plaintext" name="DocumentTypeId" value="' + $("#ddlTipoDocumento").val() + '"></td>';
+        fila = fila + '<td > <input class="form-control-plaintext" type="text" name="ProductId" value="' + $("#ddlArticulo").val() + '"></td>';
+        fila = fila + '<td > <input class="form-control-plaintext" type="text" name="Quantity" value="' + $("#txtCantidad").val() + '"></td>';
+        fila = fila + '<td > <input class="form-control-plaintext" type="text" name="UnitCost" value="' + $("#txtPrecio").val() + '"></td>';
+        fila = fila + '<td > <input class="form-control-plaintext" type="text" name="CostCurrencyId" value="' + $("#ddlMoneda").val() + '"></td>';
         fila = fila + '</tr>';
 
         //$("#dataTable_wrapper > tbody").append(fila);

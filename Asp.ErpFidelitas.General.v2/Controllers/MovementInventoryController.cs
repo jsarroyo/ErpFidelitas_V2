@@ -201,7 +201,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                     {
                         products = JsonConvert.DeserializeObject<List<DocumentType>>(responseClient.Value.ToString());
                     }
-                    foreach (var item in products.Where(d => d.Name.Contains("INV")))
+                    foreach (var item in products.Where(d => d.Name.Contains("inv")))
                     {
 
                         keyValuePairs.Add(new SelectListItem { Text = item.Name, Value = item.DocumentTypeId.ToString() });
@@ -221,25 +221,37 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         }
         // POST: MovementInventory/Create
         [HttpPost]
-        public async Task<ActionResult> Create(MovementInventory collection)
+        public async Task<ActionResult> Create(MovementInventory collection, short[] DocumentTypeId, int[] ProductId, decimal[] Quantity, decimal[] UnitCost, short[] CostCurrencyId)
         {
             try
             {
-                movementInventory = new MovementInventory();
+                var sss = HttpContext.Request["DocumentTypeId"];
                 responseClient = new Response();
-
-                using (var client = new HttpClient())
+                movementInventory = new MovementInventory();
+                for (int i=0;i< DocumentTypeId.Length;i++)
                 {
-                    var json = JsonConvert.SerializeObject(collection);
-                    var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
+                    movementInventory = new MovementInventory()
+                    {
+                        CompanyId = 1,
+                        DocumentTypeId = DocumentTypeId[i],
+                        ProductId = ProductId[i],
+                        Quantity = Quantity[i],
+                        UnitCost = UnitCost[i],
+                        CostCurrencyId = CostCurrencyId[i],
+                        MovementDate = DateTime.Now
+                    };
 
-                    HttpResponseMessage response = await client.PostAsync(UrlActionPathInsertOne, stringContent);
+                    using (var client = new HttpClient())
+                    {
+                        var json = JsonConvert.SerializeObject(movementInventory);
+                        var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    string resultContent = response.Content.ReadAsStringAsync().Result;
+                        HttpResponseMessage response = await client.PostAsync(UrlActionPathInsertOne, stringContent);
 
+                        string resultContent = response.Content.ReadAsStringAsync().Result;
+                    }
                 }
-
-                return RedirectToAction("Index");
+                return View();
             }
             catch (Exception error)
             {
