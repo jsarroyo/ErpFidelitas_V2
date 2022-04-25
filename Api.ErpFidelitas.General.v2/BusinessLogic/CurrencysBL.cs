@@ -162,9 +162,53 @@ namespace Api.ErpFidelitas.General.v2.BusinessLogic
 				try
 				{
 
-					//var Entidades = (from u in dBEntities.Currencys
-					//				 where u.CurrencyId == CurrencyId
-					//				 select u).Any();
+					var tieneRegistrosEnCuentasPorCobrar = (from u in dBEntities.MovementsAccountsReceivable
+															where u.CurrencyId == CurrencyId
+															select u).Any();
+					if (tieneRegistrosEnCuentasPorCobrar)
+					{
+						return request.DoWarning($"No se permite borrar registros por que tiene relaciones en otros modulos.");
+					}
+
+					var tieneRegistrosEnCuentasPorPagar = (from u in dBEntities.MovementsDebtsToPay
+														   where u.CurrencyId == CurrencyId
+														   select u).Any();
+					if (tieneRegistrosEnCuentasPorPagar)
+					{
+						return request.DoWarning($"No se permite borrar registros por que tiene relaciones en otros modulos.");
+					}
+
+					var tieneRegistrosEnInventarioUnitPrice = (from u in dBEntities.MovementsInventory
+														   where u.UnitPriceCurrencyId == CurrencyId
+														   select u).Any();
+					if (tieneRegistrosEnInventarioUnitPrice)
+					{
+						return request.DoWarning($"No se permite borrar registros por que tiene relaciones en otros modulos.");
+					}
+					var tieneRegistrosEnInventarioCost = (from u in dBEntities.MovementsInventory
+															   where u.CostCurrencyId == CurrencyId
+															   select u).Any();
+					if (tieneRegistrosEnInventarioCost)
+					{
+						return request.DoWarning($"No se permite borrar registros por que tiene relaciones en otros modulos.");
+					}
+
+					var tieneRegistrosEnProductsUnitPrice = (from u in dBEntities.Products
+															   where u.UnitPriceCurrencyId == CurrencyId
+															   select u).Any();
+					if (tieneRegistrosEnProductsUnitPrice)
+					{
+						return request.DoWarning($"No se permite borrar registros por que tiene relaciones en otros modulos.");
+					}
+
+					var tieneRegistrosEnProductsUnitCost = (from u in dBEntities.Products
+															 where u.UnitCostCurrencyId == CurrencyId
+															 select u).Any();
+					if (tieneRegistrosEnProductsUnitCost)
+					{
+						return request.DoWarning($"No se permite borrar registros por que tiene relaciones en otros modulos.");
+					}
+
 
 					var Entidades = (from u in dBEntities.Currencys
 									 where u.CurrencyId == CurrencyId
