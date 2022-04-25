@@ -17,6 +17,10 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         MovementInventory movementInventory;
         List<MovementInventory> movements;
         Response responseClient;
+        const string UrlActionPathAllProducts = "https://localhost:44331/General/Products/ObtenerTodas";
+        const string UrlActionPathAllCurrencys = "https://localhost:44331/General/Currencys/ObtenerTodas";
+        const string UrlActionPathAllTiposDoc = "https://localhost:44331/General/DocumentTypes/ObtenerTodas";
+
         const string UrlActionPathDetails = "https://localhost:44331/General/MovementsInventory/ObtenerUno?id={0}";
         const string UrlActionPathList = "https://localhost:44331/General/MovementsInventory/ObtenerTodas";
         const string UrlActionPathInsertOne = "https://localhost:44331/General/MovementsInventory/CrearUno";
@@ -90,11 +94,130 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
         }
 
         // GET: MovementInventory/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
+            ViewBag.ListaTiposDocumento = new List<SelectListItem>();
+            ViewBag.ListaMonedas = new List<SelectListItem>();
+            ViewBag.ListaArticulos = new List<SelectListItem>();
+
+            ViewBag.ListaTiposDocumento = await ObtenerComboTiposDocumento();
+            ViewBag.ListaMonedas = await ObtenerComboMonedas();
+            ViewBag.ListaArticulos = await ObtenerComboArticulosAsync();
+
             return View();
         }
 
+		private async Task<List<SelectListItem>> ObtenerComboArticulosAsync()
+		{
+            List<SelectListItem> keyValuePairs = new List<SelectListItem>();
+             
+            List<Product> products = new List<Product>();
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathAllProducts));
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        products = JsonConvert.DeserializeObject<List<Product>>(responseClient.Value.ToString());
+                    }
+					foreach (var item in products)
+					{
+
+                        keyValuePairs.Add (new SelectListItem { Text = item.Name,Value = item.ProductId.ToString() } );
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+                 
+            }  
+
+            return keyValuePairs;
+		}
+        private async Task<List<SelectListItem>> ObtenerComboMonedas()
+        {
+            List<SelectListItem> keyValuePairs = new List<SelectListItem>();
+
+            List<Currency> products = new List<Currency>();
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathAllCurrencys));
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        products = JsonConvert.DeserializeObject<List<Currency>>(responseClient.Value.ToString());
+                    }
+                    foreach (var item in products)
+                    {
+                         
+                        keyValuePairs.Add(new SelectListItem { Text = item.Name, Value = item.CurrencyId.ToString() });
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+
+            }
+
+            return keyValuePairs;
+        }
+        private async Task<List<SelectListItem>> ObtenerComboTiposDocumento()
+        {
+            List<SelectListItem> keyValuePairs = new List<SelectListItem>();
+
+            List<DocumentType> products = new List<DocumentType>();
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.GetAsync(string.Format(UrlActionPathAllTiposDoc));
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var str = await response.Content.ReadAsStringAsync();
+                        responseClient = JsonConvert.DeserializeObject<Response>(str);
+                    }
+                    if (responseClient.Success)
+                    {
+                        products = JsonConvert.DeserializeObject<List<DocumentType>>(responseClient.Value.ToString());
+                    }
+                    foreach (var item in products)
+                    {
+
+                        keyValuePairs.Add(new SelectListItem { Text = item.Name, Value = item.DocumentTypeId.ToString() });
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                ViewBag.ErrorInfo = ERRORMESSAGE;
+                ViewBag.ErrorMessage = error.Message;
+                ViewBag.InnerException = error.InnerException;
+                ViewBag.StackTrace = error.StackTrace;
+
+            }
+
+            return keyValuePairs;
+        }
         // POST: MovementInventory/Create
         [HttpPost]
         public async Task<ActionResult> Create(MovementInventory collection)

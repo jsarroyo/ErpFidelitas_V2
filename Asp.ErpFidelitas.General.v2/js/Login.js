@@ -1,8 +1,6 @@
 ﻿ 
 
-var LoginJS = function(){
-    email: $("#txtEmail").val();
-    password: $("#txtPassword").val();
+var LoginJS = function(){ 
 
     this.Iniciologin = function () {
         $("#txtEmail").val("");
@@ -154,7 +152,24 @@ var LoginJS = function(){
     function IsUndefined(mystr) {
         return (mystr == undefined);
     }
-    function AddInv() {
+    this.AddMovimientoInv = function () {
+        if ($("#ddlTipoDocumento").val() == "") {
+            alertify.alert("Seleccione un tipo de documento");
+            return;
+        }
+        if ($("#ddlArticulo").val() == "") {
+            alertify.alert("Seleccione un artículo");
+            return;
+        }
+        if ($("#txtCantidad").val() == "0") {
+            alertify.alert("Cantidad no puede ser cero o vacío");
+            return;
+        }
+        if ($("#ddlMoneda").val() == "") {
+            alertify.alert("Seleccione una moneda");
+            return;
+        }
+
         fila = '<tr class="odd">';
         fila = fila + '<td class="sorting_1">' + $("#ddlTipoDocumento").val() + '</td>';
         fila = fila + '<td>' + $("#ddlArticulo").val() + '</td>';
@@ -163,7 +178,8 @@ var LoginJS = function(){
         fila = fila + '<td>' + $("#ddlMoneda").val() + '</td>';
         fila = fila + '</tr>';
 
-        $("#myTable > tbody").append(fila);
+        //$("#dataTable_wrapper > tbody").append(fila);
+        $('#dataTable').append(fila);
     }
 };
 var userOne = new LoginJS();
