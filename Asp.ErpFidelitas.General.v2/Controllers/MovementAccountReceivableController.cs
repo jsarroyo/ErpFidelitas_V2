@@ -203,7 +203,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                     {
                         products = JsonConvert.DeserializeObject<List<DocumentType>>(responseClient.Value.ToString());
                     }
-                    foreach (var item in products.Where(d => d.Name.Contains("CXP")))
+                    foreach (var item in products.Where(d => d.Name.Contains("CXC")))
                     {
 
                         keyValuePairs.Add(new SelectListItem { Text = item.Name, Value = item.DocumentTypeId.ToString() });

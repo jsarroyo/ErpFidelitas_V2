@@ -33,7 +33,7 @@
                     <br>
                     @*@Html.DropDownListFor(m => , ViewBag.ListaTiposDocumento as List<SelectListItem>, new { @class = "form-control" })*@
 
-                    <select id="ddlTipoDocumento" class="dropdown" aria-label="Default select example">
+                    <select id="dlTipoDocumento" class="dropdown" aria-label="Default select example">
                         <option selected="">Seleccione un Tipo Documento:</option>
                         @foreach (var item in ViewBag.ListaTiposDocumento as List<SelectListItem>)
                         {
