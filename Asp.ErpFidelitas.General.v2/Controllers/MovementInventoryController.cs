@@ -4,6 +4,7 @@ using Asp.ErpFidelitas.General.v2.Utilities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -200,7 +201,7 @@ namespace Asp.ErpFidelitas.General.v2.Controllers
                     {
                         products = JsonConvert.DeserializeObject<List<DocumentType>>(responseClient.Value.ToString());
                     }
-                    foreach (var item in products)
+                    foreach (var item in products.Where(d => d.Name.Contains("INV")))
                     {
 
                         keyValuePairs.Add(new SelectListItem { Text = item.Name, Value = item.DocumentTypeId.ToString() });

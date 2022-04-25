@@ -172,9 +172,38 @@ var LoginJS = function(){
 
         fila = '<tr class="odd">';
         fila = fila + '<td class="sorting_1">' + $("#ddlTipoDocumento").val() + '</td>';
-        fila = fila + '<td>' + $("#ddlArticulo").val() + '</td>';
+        fila = fila + '<td>' + $("#ddlPersona").val() + '</td>';
         fila = fila + '<td>' + $("#txtCantidad").val() + '</td>';
         fila = fila + '<td>' + $("#txtPrecio").val() + '</td>';
+        fila = fila + '<td>' + $("#ddlMoneda").val() + '</td>';
+        fila = fila + '</tr>';
+
+        //$("#dataTable_wrapper > tbody").append(fila);
+        $('#dataTable').append(fila);
+    }
+
+    this.AddMovimientoCXP = function () {
+        if ($("#ddlPersona").val() == "") {
+            alertify.alert("Seleccione la persona");
+            return;
+        }
+        if ($("#ddlArticulo").val() == "") {
+            alertify.alert("Seleccione un artículo");
+            return;
+        }
+        if ($("#txtCantidad").val() == "0") {
+            alertify.alert("Cantidad no puede ser cero o vacío");
+            return;
+        }
+        if ($("#ddlMoneda").val() == "") {
+            alertify.alert("Seleccione una moneda");
+            return;
+        }
+
+        fila = '<tr class="odd">';
+        fila = fila + '<td>' + $("#ddlPersona").val() + '</td>';
+        fila = fila + '<td class="sorting_1">' + $("#ddlTipoDocumento").val() + '</td>';
+        fila = fila + '<td>' + $("#txtMonto").val() + '</td>';
         fila = fila + '<td>' + $("#ddlMoneda").val() + '</td>';
         fila = fila + '</tr>';
 
